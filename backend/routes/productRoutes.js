@@ -18,7 +18,7 @@ const upload = multer({ storage });
 router.post("/",   upload.array("images"), async (req, res) => {
   try {
     // optional: check admin role
-    const { name, price, description, category, stock } = req.body;
+    const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
     const slug = slugify(name || Date.now().toString(), { lower: true, strict: true });
 
     const uploadedImages = [];
@@ -40,7 +40,7 @@ router.post("/",   upload.array("images"), async (req, res) => {
     }
 
     const product = new Product({
-      name, price, description, category, stock,
+      name, previousPrice, offerPrice, brand, description, category, stock,
       images: uploadedImages,
       slug,
       createdAt: Date.now()
@@ -54,16 +54,37 @@ router.post("/",   upload.array("images"), async (req, res) => {
   }
 });
 
-// READ all products (public)
+// // READ all products (public)
+// router.get("/", async (req, res) => {
+//   try {
+//     // optionally add pagination / filtering / sorting
+//     const products = await Product.find().sort({ createdAt: -1 });
+//     res.json(products);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+  
+// });
+ 
+// ✅ Get all products or filter by category
 router.get("/", async (req, res) => {
   try {
-    // optionally add pagination / filtering / sorting
-    const products = await Product.find().sort({ createdAt: -1 });
+    const { category } = req.query;
+    const filter = {};
+
+    if (category) {
+      // ✅ case-insensitive match
+      filter.category = new RegExp(`^${category}$`, "i");
+    }
+
+    const products = await Product.find(filter).sort({ createdAt: -1 });
     res.json(products);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error fetching products:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // READ single product by slug
 router.get("/:slug", async (req, res) => {
@@ -83,12 +104,14 @@ router.put("/:id",  upload.array("images"), async (req, res) => {
     if (!product) return res.status(404).json({ message: "Not found" });
 
     // update fields
-    const { name, price, description, category, stock } = req.body;
+    const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
     if (name) {
       product.name = name;
       product.slug = slugify(name, { lower: true, strict: true });
     }
-    if (price) product.price = price;
+    if (previousPrice) product.previousPrice = previousPrice;
+    if (offerPrice) product.offerPrice = offerPrice;
+    if (brand) product.brand = brand;
     if (description) product.description = description;
     if (category) product.category = category;
     if (typeof stock !== "undefined") product.stock = stock;

@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 export default function ProductForm({ productId }) {
   const [form, setForm] = useState({
     name: "",
-    price: "",
+    previousPrice: "",
+    offerPrice: "",
     category: "",
     description: "",
     stock: 0,
@@ -91,9 +92,18 @@ export default function ProductForm({ productId }) {
         />
         <input
           type="number"
-          name="price"
-          placeholder="Price"
-          value={form.price}
+          name="previousPrice"
+          placeholder="Previous Price"
+          value={form.previousPrice}
+          onChange={handleInputChange}
+          className="border p-2 rounded"
+          required
+        />
+        <input
+          type="number"
+          name="offerPrice"
+          placeholder="Offer Price"
+          value={form.offerPrice}
           onChange={handleInputChange}
           className="border p-2 rounded"
           required
@@ -106,6 +116,7 @@ export default function ProductForm({ productId }) {
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
+        <input type="text" name="brand" placeholder="Brand Name" value={form.brand} onChange={handleInputChange} className="border p-2 rounded" />
         <textarea
           name="description"
           placeholder="Description"

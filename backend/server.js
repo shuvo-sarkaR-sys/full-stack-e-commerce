@@ -7,7 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import Admin from "./models/Admin.js";
 import bcrypt from "bcryptjs";
 
-
+import userAuthRoutes from "./routes/userAuthRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -44,7 +44,7 @@ createDefaultAdmin();
 // Routes
 app.use("/api/products", productRoutes);
 
-
+app.use("/api/UserAuth", userAuthRoutes);
 
 // After DB connect
 
