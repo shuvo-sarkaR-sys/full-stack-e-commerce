@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
 const ProductDetails = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -19,34 +20,54 @@ const ProductDetails = () => {
 
     fetchProduct();
   }, [slug]);
-const handleAddToCart = (productId) => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Please login to add products to cart.");
-    navigate("/login");
-    return;
-  }
 
-  // proceed to add cart API call
-};
+  const handleAddToCart = async (productId) => {
+     
+
+    try {
+      await axios.post(
+        "http://localhost:5000/api/cart/add",
+        { productId, quantity: 1 },
+        
+      );
+      alert("Product added to cart!");
+    } catch (error) {
+      console.error("Failed to add to cart:", error);
+      alert("Something went wrong.");
+    }
+  };
 
   if (!product) return <p className="p-4">Loading product...</p>;
 
+  const price = product.offerPrice || product.previousPrice || 0;
+  const discountedPrice = product.discount
+    ? price - (price * product.discount) / 100
+    : price;
+
   return (
     <div>
-      <Navbar/>
-    <div className="max-w-4xl mx-auto p-4">
-      <img
-        src={product.images[0]?.url}
-        alt={product.name}
-        className="w-full h-80 object-cover rounded"
-      />
-      <h1 className="text-2xl font-bold mt-4">{product.name}</h1>
-      <p className="text-gray-600 mt-2">Regular price: ${product.previousPrice}</p>
-      <p className="text-red-500 font-bold">Offer price: ${product.offerPrice}</p>
-      <p className="mt-4">{product.description}</p>
-      <button onClick={() => handleAddToCart(product._id)} className="bg-blue-500 text-white py-2 px-4 rounded">Add to Cart</button>
-    </div>
+      <Navbar />
+      <div className="max-w-4xl mx-auto p-4">
+        <img
+          src={product.images?.[0]?.url || "/placeholder.jpg"}
+          alt={product.name}
+          className="w-full h-80 object-cover rounded"
+        />
+        <h1 className="text-2xl font-bold mt-4">{product.name}</h1>
+        <p className="text-gray-600 mt-2 line-through">
+          Regular Price: ${price}
+        </p>
+        <p className="text-red-500 font-bold">
+          Offer Price: ${discountedPrice.toFixed(2)}
+        </p>
+        <p className="mt-4">{product.description}</p>
+        <button
+          onClick={() => handleAddToCart(product._id)}
+          className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 };

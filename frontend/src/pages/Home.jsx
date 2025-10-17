@@ -26,7 +26,6 @@ export default function Home() {
     };
     loadProducts();
   }, []);
-
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>{error}</p>;
 

@@ -10,6 +10,8 @@ const productSchema = new mongoose.Schema({
   images: [{ url: String, public_id: String }],
   category: String,
   stock: { type: Number, default: 0 },
+   isHotDeal: { type: Boolean, default: false },
+    discount: { type: Number, default: 0 }, 
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 }, { timestamps: true });
 

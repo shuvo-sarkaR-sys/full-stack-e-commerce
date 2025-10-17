@@ -14,6 +14,7 @@ import ProductDetails from './pages/ProductDetails'
 import UserLogin from './pages/UserLogin'
 import UserRegister from './pages/UserRegister'
 import UserProfile from './pages/UserProfile'
+import Cart from './pages/Cart'
 function App() {
  
 
@@ -34,7 +35,7 @@ function App() {
 <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/category" element={<Categories />} />
                 <Route path="/product/:slug" element={<ProductDetails />} />
-
+<Route path="/cart" element={<Cart/>} />
       </Routes>
     </BrowserRouter>
     </>)

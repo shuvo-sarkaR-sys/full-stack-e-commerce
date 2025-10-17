@@ -6,7 +6,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import Admin from "./models/Admin.js";
 import bcrypt from "bcryptjs";
-
+import cartRoutes from "./routes/cartRoutes.js";
 import userAuthRoutes from "./routes/userAuthRoutes.js";
 
 dotenv.config();
@@ -45,7 +45,8 @@ createDefaultAdmin();
 app.use("/api/products", productRoutes);
 
 app.use("/api/UserAuth", userAuthRoutes);
-
+app.use("/api/users", userAuthRoutes); // For profile route
+app.use("/api/cart", cartRoutes);
 // After DB connect
 
 const PORT = process.env.PORT || 5000;
