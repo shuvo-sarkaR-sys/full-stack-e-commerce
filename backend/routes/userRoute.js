@@ -1,13 +1,28 @@
 import express from "express";
- import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 const router = express.Router();
 
-// ✅ Get logged-in user profile
-router.get("/profile",  async (req, res) => {
+const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
   try {
-    // req.user is already populated in protectUser middleware
-    const user = await User.findById(req.user._id).select("-password");
+    const decoded = jwt.verify(token, process.env.USER_JWT_SECRET || "your_jwt_secret");
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+router.get("/profile", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

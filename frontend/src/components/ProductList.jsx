@@ -5,7 +5,9 @@ export default function ProductList() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [editForm, setEditForm] = useState({
     name: "",
-    price: "",
+    previousPrice: "",
+    offerPrice: "",
+    brand: "",
     description: "",
     category: "",
     stock: 0,
@@ -49,7 +51,9 @@ export default function ProductList() {
     setEditingProduct(product._id);
     setEditForm({
       name: product.name,
-      price: product.price,
+      previousPrice: product.previousPrice,
+      offerPrice: product.offerPrice || "",
+      brand: product.brand || "",
       description: product.description || "",
       category: product.category || "",
       stock: product.stock || 0,
@@ -72,7 +76,9 @@ export default function ProductList() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", editForm.name);
-    formData.append("price", editForm.price);
+    formData.append("previousPrice", editForm.previousPrice);
+    formData.append("offerPrice", editForm.offerPrice);
+    formData.append("brand", editForm.brand);
     formData.append("description", editForm.description);
     formData.append("category", editForm.category);
     formData.append("stock", editForm.stock);
@@ -117,7 +123,7 @@ export default function ProductList() {
             )}
 
             <h3 className="font-semibold mt-2">{p.name}</h3>
-            <p className="text-gray-700">${p.price}</p>
+            <p className="text-gray-700">${p.previousPrice}</p>
             <p className="text-sm text-gray-500">{p.category}</p>
 
             <div className="flex gap-2 mt-3">
@@ -140,7 +146,7 @@ export default function ProductList() {
 
       {/* ✅ Edit Modal */}
       {editingProduct && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 bg-opacity-50 z-50">
           <form
             onSubmit={handleUpdate}
             className="bg-white p-6 rounded shadow-lg w-full max-w-md flex flex-col gap-3"
@@ -159,14 +165,21 @@ export default function ProductList() {
 
             <input
               type="number"
-              name="price"
-              value={editForm.price}
+              name="previousPrice"
+              value={editForm.previousPrice}
               onChange={handleEditChange}
-              placeholder="Price"
+              placeholder="Previous Price"
               className="border p-2 rounded"
               required
             />
-
+            <input
+              type="number"
+              name="offerPrice"
+              value={editForm.offerPrice}
+              onChange={handleEditChange}
+              placeholder="Offer Price"
+              className="border p-2 rounded"
+            />
             <input
               type="text"
               name="category"
@@ -175,7 +188,7 @@ export default function ProductList() {
               placeholder="Category"
               className="border p-2 rounded"
             />
-
+            <input type="text" name="brand" value={editForm.brand} onChange={handleEditChange} placeholder="Brand" className="border p-2 rounded" />
             <textarea
               name="description"
               value={editForm.description}

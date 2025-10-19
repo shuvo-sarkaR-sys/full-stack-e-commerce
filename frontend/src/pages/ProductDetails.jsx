@@ -25,10 +25,16 @@ const ProductDetails = () => {
      
 
     try {
+      const token = localStorage.getItem("usertoken");
+      console.log("Using token:", token);
       await axios.post(
         "http://localhost:5000/api/cart/add",
         { productId, quantity: 1 },
-        
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       alert("Product added to cart!");
     } catch (error) {

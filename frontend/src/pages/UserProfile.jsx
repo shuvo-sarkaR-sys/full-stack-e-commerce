@@ -8,6 +8,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("usertoken");
+    console.log("User token frontend:", token);
     if (!token) {
       navigate("/userlogin");
       return;
@@ -38,8 +39,8 @@ const UserProfile = () => {
 
       <button
         onClick={() => {
-          localStorage.removeItem("userToken");
-          navigate("/login");
+          localStorage.removeItem("usertoken");
+          navigate("/userlogin");
         }}
         className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
       >

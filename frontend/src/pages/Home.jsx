@@ -39,12 +39,18 @@ export default function Home() {
         <p>No products found.</p>
       ) : (
         <div className="grid mx-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-          {products.map((p) => (
-            <div key={p._id} className="border rounded-lg overflow-hidden shadow-sm">
-              {p.images?.[0]?.url && (
-               <Link to={`/product/${p.slug}`}>
-                 <img
-                   src={p.images[0].url}
+          {products.map((p) => { 
+            const price = p.offerPrice || p.previousPrice || 0;
+            const discountedPrice = p.discount
+              ? price - (price * p.discount) / 100
+              : price;
+
+            return (
+              <div key={p._id} className="border rounded-lg overflow-hidden shadow-sm">
+                {p.images?.[0]?.url && (
+                  <Link to={`/product/${p.slug}`}>
+                    <img
+                      src={p.images[0].url}
                    alt={p.name}
                    className="w-full h-72 object-cover"
                  />
@@ -56,15 +62,15 @@ export default function Home() {
                  <h3 className="text-lg font-semibold">{p.name}</h3>
                </Link>
                <div className="flex justify-between">
-                <p className="text-gray-700 line-through">Regular price: ${p.previousPrice}</p>
-                <p className="text-red-500 font-bold">Offer price: ${p.offerPrice}</p>
+                <p className="text-gray-700 line-through">Regular price: ${price}</p>
+                <p className="text-red-500 font-bold">Offer price: ${discountedPrice.toFixed(2)}</p>
                 </div>
                 <Link to={`/product/${p.slug}`}>
                   <button className="bg-blue-500 cursor-pointer text-white py-2 px-4 rounded">Buy Now</button>
                 </Link>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       )}
       

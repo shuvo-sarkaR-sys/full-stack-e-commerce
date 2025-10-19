@@ -8,7 +8,7 @@ import Admin from "./models/Admin.js";
 import bcrypt from "bcryptjs";
 import cartRoutes from "./routes/cartRoutes.js";
 import userAuthRoutes from "./routes/userAuthRoutes.js";
-
+import userRoutes from "./routes/userRoute.js";
 dotenv.config();
 connectDB();
 const app = express();
@@ -45,7 +45,7 @@ createDefaultAdmin();
 app.use("/api/products", productRoutes);
 
 app.use("/api/UserAuth", userAuthRoutes);
-app.use("/api/users", userAuthRoutes); // For profile route
+app.use("/api/users", userRoutes); // For profile route
 app.use("/api/cart", cartRoutes);
 // After DB connect
 

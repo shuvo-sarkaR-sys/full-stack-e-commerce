@@ -2,7 +2,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-
+import bcrypt from "bcryptjs";
 const router = express.Router();
 
 // 📝 Register
@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
 
     const user = await User.create({ name, email, password });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const token = jwt.sign({ id: user._id }, process.env.USER_JWT_SECRET, { expiresIn: "7d" });
 
     res.json({
       _id: user._id,
@@ -29,23 +29,29 @@ router.post("/register", async (req, res) => {
 });
 
 // 🔐 Login
+// POST /api/UserAuth/login
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  try {
+    console.log("Login request body:", req.body);
+    const { email, password } = req.body;
 
-  if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    const user = await User.findOne({ email });
+    console.log("User found:", user);
 
-  const isMatch = await user.matchPassword(password);
-  if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!user) return res.status(400).json({ message: "Invalid email or password" });
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("Password match:", isMatch);
 
-  res.json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    token,
-  });
+    if (!isMatch) return res.status(400).json({ message: "Invalid email or password" });
+
+    const token = jwt.sign({ id: user._id }, process.env.USER_JWT_SECRET || "your_jwt_secret", { expiresIn: "7d" });
+    res.json({ message: "Login successful", token });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
 
 export default router;

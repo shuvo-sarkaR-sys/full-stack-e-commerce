@@ -53,7 +53,8 @@ const HotDealManager = () => {
           {products.map(product => (
             <tr key={product._id} className="border-b">
               <td className="p-2">{product.name}</td>
-              <td className="p-2">${product.price}</td>
+              <td className="p-2">${product.previousPrice}</td>
+              
               <td className="p-2">
                 <button
                   className={`px-3 py-1 rounded ${
