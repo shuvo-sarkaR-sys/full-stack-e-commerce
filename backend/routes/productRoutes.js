@@ -88,6 +88,26 @@ router.get("/", async (req, res) => {
 
  
 
+// 🔍 Search Products by name (case-insensitive)
+router.get("/search", async (req, res) => {
+  try {
+    const query = req.query.q;
+    if (!query) {
+      return res.status(400).json({ message: "Query is required" });
+    }
+
+    const products = await Product.find({
+      name: { $regex: query, $options: "i" }, // case-insensitive search
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 // UPDATE product (admin)
 router.put("/:id",  upload.array("images"), async (req, res) => {
   try {

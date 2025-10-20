@@ -13,7 +13,7 @@ const cartItemSchema = new mongoose.Schema({
   },
   offerPrice:{
     type: Number,
-    required: true,
+    required: false,
   },
 });
 

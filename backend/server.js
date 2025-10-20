@@ -18,7 +18,7 @@ app.use(cors({
 app.use(express.json());
 const createDefaultAdmin = async () => {
   try {
-    const email = "admin@example.com";     // ✅ unified email
+    const email = "md.sirforce@gmail.com";     // ✅ unified email
     const password = "admin";              // ✅ password for login
 
     const existing = await Admin.findOne({ email });

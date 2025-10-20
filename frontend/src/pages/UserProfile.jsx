@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Navbar from "../components/Navbar";
 const UserProfile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -32,6 +32,8 @@ const UserProfile = () => {
   if (!user) return <p className="text-center mt-10">Loading profile...</p>;
 
   return (
+    <div>
+      <Navbar/>
     <div className="max-w-lg mx-auto p-6 mt-10 bg-white shadow rounded">
       <h2 className="text-2xl font-bold mb-4 text-center">👤 User Profile</h2>
       <p><strong>Name:</strong> {user.name}</p>
@@ -46,6 +48,7 @@ const UserProfile = () => {
       >
         Logout
       </button>
+    </div>
     </div>
   );
 };
