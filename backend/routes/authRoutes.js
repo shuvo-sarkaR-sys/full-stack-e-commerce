@@ -78,10 +78,11 @@ router.post("/verify-otp", async (req, res) => {
   res.json({ message: "OTP verified" });
 });
 
-// ✅ 3. Reset Password
+// ✅ 3. Reset Password & Email (No bcrypt)
 router.post("/reset-password", async (req, res) => {
-  let { email, otp, newPassword } = req.body;
+  let { email, otp, newPassword, newEmail } = req.body;
   email = email.trim().toLowerCase();
+  if (newEmail) newEmail = newEmail.trim().toLowerCase();
 
   const admin = await Admin.findOne({ email, resetOTP: otp });
   if (!admin) return res.status(400).json({ message: "Invalid OTP or email" });
@@ -90,13 +91,26 @@ router.post("/reset-password", async (req, res) => {
     return res.status(400).json({ message: "OTP expired" });
   }
 
-  const hashed = await bcrypt.hash(newPassword, 10);
-  admin.password = hashed;
+  // ✅ Directly set new password (No hashing)
+  admin.password = newPassword;
+
+  // ✅ Update email if provided
+  if (newEmail && newEmail !== email) {
+    const existingAdmin = await Admin.findOne({ email: newEmail });
+    if (existingAdmin) {
+      return res.status(400).json({ message: "New email already in use" });
+    }
+    admin.email = newEmail;
+  }
+
+  // ✅ Clear OTP fields
   admin.resetOTP = undefined;
   admin.resetOTPExpires = undefined;
+
   await admin.save();
 
-  res.json({ message: "Password reset successful" });
+  res.json({ message: "Email & Password updated successfully" });
 });
+
 
 export default router;

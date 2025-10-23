@@ -19,7 +19,7 @@ app.use(express.json());
 const createDefaultAdmin = async () => {
   try {
     const email = "md.sirforce@gmail.com";     // ✅ unified email
-    const password = "admin";              // ✅ password for login
+    const password = "admim";              // ✅ password for login
 
     const existing = await Admin.findOne({ email });
 
