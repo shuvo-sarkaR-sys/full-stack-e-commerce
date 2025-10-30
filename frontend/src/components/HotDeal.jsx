@@ -61,16 +61,16 @@ const HotDeal = () => {
   return (
     <section className="p-6">
       
-      <div className="w-[400px] h-[500px] relative mx-auto border rounded-lg p-4 shadow-lg">
-        <h2 className=" absolute bg-blue-400 rounded-lg top-0 left-0 p-2 font-bold mb-4">🔥 Hot Deal</h2>
+      <div className="w-[400px] h-[500px] relative mx-auto border border-gray-200 rounded-lg p-4 shadow-lg">
+        <h2 className=" absolute bg-red-500 text-white rounded-lg top-0 left-0 p-2 font-bold mb-4">🔥 Hot Deal</h2>
         <img
           src={hotDeal.images?.[0]?.url}
           alt={hotDeal.name}
           className="h-[70%] w-full object-cover rounded"
         />
-        <h3 className="font-semibold mt-3 text-lg text-center">{hotDeal.name}</h3>
+        <h3 className="font-semibold mt-3 text-[#425A8B] text-lg text-center">{hotDeal.name}</h3>
         <div className="text-center mt-2">
-          <span className="text-red-500 font-bold text-xl">
+          <span className="text-[#425A8B]  font-bold text-xl">
             ${discountedPrice.toFixed(2)}
           </span>
           {hotDeal.discount > 0 && (
@@ -78,7 +78,7 @@ const HotDeal = () => {
           )}
         </div>
         <Link to={`/product/${hotDeal.slug}`}>
-          <button className="mt-4 w-full bg-red-500 text-white py-2 rounded">
+          <button className="mt-4 w-full cursor-pointer bg-orange-500 hover:bg-[#425A8B] text-white py-2 rounded">
             Buy Now
           </button>
         </Link>

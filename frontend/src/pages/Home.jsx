@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
+import Category from "../components/Category";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // loading state
@@ -33,6 +34,7 @@ export default function Home() {
     <div className="container mx-auto ">
       <Navbar />
       <Hero />
+      <Category />
       <h1 className="text-3xl font-bold m-10">All Products</h1>
 
       {products.length === 0 ? (
@@ -46,7 +48,7 @@ export default function Home() {
               : price;
 
             return (
-              <div key={p._id} className="border rounded-lg overflow-hidden shadow-sm">
+              <div key={p._id} className=" rounded-lg overflow-hidden border border-gray-200 hover:shadow-md  ">
                 {p.images?.[0]?.url && (
                   <Link to={`/product/${p.slug}`}>
                     <img
@@ -61,12 +63,12 @@ export default function Home() {
                <Link to={`/product/${p.slug}`}>
                  <h3 className="text-lg font-semibold">{p.name}</h3>
                </Link>
-               <div className="flex justify-between">
-                <p className="text-gray-700 line-through">Regular price: ${price}</p>
-                <p className="text-red-500 font-bold">Offer price: ${discountedPrice.toFixed(2)}</p>
+               <div className="flex  text-sm mb-3 justify-between">
+                <p className="text-gray-700 line-through">Regular Price: ${price}</p>
+                <p className="text-black-500 font-bold">Offer Price: ${discountedPrice.toFixed(2)}</p>
                 </div>
                 <Link to={`/product/${p.slug}`}>
-                  <button className="bg-blue-500 cursor-pointer text-white py-2 px-4 rounded">Buy Now</button>
+                  <button className="bg-blue-500 cursor-pointer text-white py-2 w-full rounded">Buy Now</button>
                 </Link>
               </div>
             </div>

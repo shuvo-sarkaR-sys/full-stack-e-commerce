@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
   offerPrice: { type: Number, required: true, default: 0 },
   images: [{ url: String, public_id: String }],
   category: String,
+  categoryImage: [{ url: String, public_id: String }],
   stock: { type: Number, default: 0 },
    isHotDeal: { type: Boolean, default: false },
     discount: { type: Number, default: 0 }, 

@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { use } from "react";
 
 const ProductDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-
+  const [login, setIsLogin] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("usertoken");
+    setIsLogin(!!token);
+  }, []);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -63,16 +68,20 @@ const ProductDetails = () => {
         <p className="text-gray-600 mt-2 line-through">
           Regular Price: ${price}
         </p>
-        <p className="text-red-500 font-bold">
+        <p className="text-black-500 font-bold">
           Offer Price: ${discountedPrice.toFixed(2)}
         </p>
         <p className="mt-4">{product.description}</p>
-        <button
-          onClick={() => handleAddToCart(product._id)}
-          className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
-        >
-          Add to Cart
-        </button>
+        {login ? (
+          <button onClick={() => handleAddToCart(product._id)} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
+            Add to Cart
+          </button>
+        ) : (
+          <button onClick={() => navigate('/userlogin')} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
+            Login to Add to Cart
+          </button>
+        )}
+
       </div>
     </div>
   );

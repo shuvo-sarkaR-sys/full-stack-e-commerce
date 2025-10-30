@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
 const Cart = () => {
   const [cart, setCart] = useState({ items: [] });
   const [loading, setLoading] = useState(false); // ✅ for loading spinner
@@ -133,7 +134,7 @@ const Cart = () => {
           })}
           <div className="mt-4 text-right flex gap-5 justify-end items-center font-bold text-lg">
             <p>Total: ${totalPrice.toFixed(2)}</p>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded">Checkout</button>
+           <Link to="/checkout"><button className="bg-blue-500 text-white px-4 py-2 rounded">Checkout</button></Link>
           </div>
         </div>
       )}

@@ -18,6 +18,7 @@ import Cart from './pages/Cart'
 import SearchPage from './pages/SearchPage'
 import BrandList from './components/Brand'
 import BrandPage from './pages/BrandPage'
+import Checkout from './pages/ChackOut'
 function App() {
  
 
@@ -42,6 +43,7 @@ function App() {
                 <Route path="/product/:slug" element={<ProductDetails />} />
 <Route path="/cart" element={<Cart />} />
 <Route path="/search" element={<SearchPage />} />
+<Route path="/checkout" element={<Checkout />} />
       </Routes>
     </BrowserRouter>
     </>)

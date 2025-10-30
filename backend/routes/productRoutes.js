@@ -15,44 +15,72 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // CREATE product (admin)
-router.post("/",   upload.array("images"), async (req, res) => {
-  try {
-    // optional: check admin role
-    const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
-    const slug = slugify(name || Date.now().toString(), { lower: true, strict: true });
+router.post(
+  "/",
+  upload.fields([
+    { name: "images", maxCount: 5 },
+    { name: "categoryImage", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
+      const slug = slugify(name || Date.now().toString(), { lower: true, strict: true });
 
-    const uploadedImages = [];
-    const files = req.files || [];
+      // Upload product images
+      const uploadedImages = [];
+      const files = req.files.images || [];
 
-    // upload each file buffer to cloudinary
-    for (const file of files) {
-      const result = await new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: "products" },
-          (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          }
-        );
-        streamifier.createReadStream(file.buffer).pipe(stream);
+      for (const file of files) {
+        const imageResult = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "products" },
+            (error, result) => (error ? reject(error) : resolve(result))
+          );
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+        uploadedImages.push({ url: imageResult.secure_url, public_id: imageResult.public_id });
+      }
+
+      // ✅ Upload Category Image (single)
+      let uploadedCategoryImage = null;
+      const categoryFile = req.files?.categoryImage?.[0];
+      if (categoryFile) {
+        const categoryResult = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "category-images" },
+            (error, result) => (error ? reject(error) : resolve(result))
+          );
+          streamifier.createReadStream(categoryFile.buffer).pipe(stream);
+        });
+        uploadedCategoryImage = {
+          url: categoryResult.secure_url,
+          public_id: categoryResult.public_id,
+        };
+      }
+
+      const product = new Product({
+        name,
+        previousPrice,
+        offerPrice,
+        brand,
+        description,
+        category,
+        stock,
+        images: uploadedImages,
+        categoryImage: uploadedCategoryImage,
+        slug,
+        createdAt: Date.now(),
       });
-      uploadedImages.push({ url: result.secure_url, public_id: result.public_id });
+
+      await product.save();
+      res.status(201).json(product);
+    } catch (err) {
+      console.error("Product creation error:", err);
+      res.status(500).json({ message: err.message });
     }
-
-    const product = new Product({
-      name, previousPrice, offerPrice, brand, description, category, stock,
-      images: uploadedImages,
-      slug,
-      createdAt: Date.now()
-    });
-
-    await product.save();
-    res.status(201).json(product);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
   }
-});
+);
+
 
 // // READ all products (public)
 // router.get("/", async (req, res) => {
@@ -109,43 +137,79 @@ router.get("/search", async (req, res) => {
 
 
 // UPDATE product (admin)
-router.put("/:id",  upload.array("images"), async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: "Not found" });
+router.put(
+  "/:id",
+  upload.fields([
+    { name: "images", maxCount: 5 },
+    { name: "categoryImage", maxCount: 1 },
+  ]),
+  async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      if (!product) return res.status(404).json({ message: "Not found" });
 
-    // update fields
-    const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
-    if (name) {
-      product.name = name;
-      product.slug = slugify(name, { lower: true, strict: true });
+      // update basic fields
+      const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
+
+      if (name) {
+        product.name = name;
+        product.slug = slugify(name, { lower: true, strict: true });
+      }
+      if (previousPrice) product.previousPrice = previousPrice;
+      if (offerPrice) product.offerPrice = offerPrice;
+      if (brand) product.brand = brand;
+      if (description) product.description = description;
+      if (category) product.category = category;
+      if (typeof stock !== "undefined") product.stock = stock;
+
+      // 🖼 Upload new product images (optional)
+      const newImages = req.files?.images || [];
+      for (const file of newImages) {
+        const imageResult = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "products" },
+            (error, result) => (error ? reject(error) : resolve(result))
+          );
+          streamifier.createReadStream(file.buffer).pipe(stream);
+        });
+        product.images.push({
+          url: imageResult.secure_url,
+          public_id: imageResult.public_id,
+        });
+      }
+
+      // 🟣 Update category image (replace old one)
+      const categoryFile = req.files?.categoryImage?.[0];
+      if (categoryFile) {
+        // delete old one if exists
+        if (product.categoryImage?.public_id) {
+          await cloudinary.uploader.destroy(product.categoryImage.public_id);
+        }
+
+        // upload new one
+        const categoryResult = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "category-images" },
+            (error, result) => (error ? reject(error) : resolve(result))
+          );
+          streamifier.createReadStream(categoryFile.buffer).pipe(stream);
+        });
+
+        product.categoryImage = {
+          url: categoryResult.secure_url,
+          public_id: categoryResult.public_id,
+        };
+      }
+
+      await product.save();
+      res.json(product);
+    } catch (err) {
+      console.error("Update error:", err);
+      res.status(500).json({ message: err.message });
     }
-    if (previousPrice) product.previousPrice = previousPrice;
-    if (offerPrice) product.offerPrice = offerPrice;
-    if (brand) product.brand = brand;
-    if (description) product.description = description;
-    if (category) product.category = category;
-    if (typeof stock !== "undefined") product.stock = stock;
-
-    // optional: handle new images (append)
-    const files = req.files || [];
-    for (const file of files) {
-      const result = await new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: "products" },
-          (error, result) => { if (error) reject(error); else resolve(result); }
-        );
-        streamifier.createReadStream(file.buffer).pipe(stream);
-      });
-      product.images.push({ url: result.secure_url, public_id: result.public_id });
-    }
-
-    await product.save();
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
-});
+);
+
 
 // DELETE product (admin)
 router.delete("/:id", async (req, res) => {

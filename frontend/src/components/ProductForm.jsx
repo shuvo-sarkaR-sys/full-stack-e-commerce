@@ -8,11 +8,14 @@ export default function ProductForm({ productId }) {
     previousPrice: "",
     offerPrice: "",
     category: "",
+    brand: "",
     description: "",
     stock: 0,
   });
   const [images, setImages] = useState([]);
   const [preview, setPreview] = useState([]);
+  const [categoryImage, setCategoryImage] = useState([]);
+  const [categoryPreview, setCategoryPreview] = useState([]);
   const navigate = useNavigate();
  console.log('api base url', API_BASE_URL);
   // Load existing product for edit
@@ -36,19 +39,35 @@ export default function ProductForm({ productId }) {
     return () => urls.forEach(url => URL.revokeObjectURL(url));
   }, [images]);
 
-  const handleInputChange = (e) => {
+
+  useEffect(() => {
+    if (categoryImage.length === 0) {
+      setCategoryPreview([]);
+      return;
+    }
+    const urls = categoryImage.map(file => URL.createObjectURL(file));
+    setCategoryPreview(urls);
+    return () => urls.forEach(url => URL.revokeObjectURL(url));
+  }, [categoryImage]);
+const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
-  };
+  }
 
   const handleFileChange = (e) => {
     setImages(Array.from(e.target.files));
   };
-
+  // Category file 
+  const handleCategoryFile = (e) => {
+    setCategoryImage(Array.from(e.target.files));
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fd = new FormData();
     Object.entries(form).forEach(([key, value]) => fd.append(key, value));
+    if(categoryImage.length > 0){ 
+       fd.append("categoryImage", categoryImage[0]); // ✅ only one file
+} 
     images.forEach(img => fd.append("images", img));
 
     try {
@@ -115,14 +134,23 @@ export default function ProductForm({ productId }) {
           value={form.category}
           onChange={handleInputChange}
           className="border p-2 rounded"
+          required
         />
-        <input type="text" name="brand" placeholder="Brand Name" value={form.brand} onChange={handleInputChange} className="border p-2 rounded" />
+        <label htmlFor="categoryImage" className="block   mb-1">Category Image</label>
+        <input type="file" accept="image/*" placeholder="Category Image"  onChange={handleCategoryFile} />
+        <div className="flex flex-wrap gap-2 mt-2">
+          {categoryPreview.map((src, idx) => (
+            <img key={idx} src={src} className="w-20 h-20 object-cover rounded" alt="preview" />
+          ))}
+        </div>
+        <input type="text" name="brand" placeholder="Brand Name" value={form.brand} onChange={handleInputChange} required className="border p-2 rounded" />
         <textarea
           name="description"
           placeholder="Description"
           value={form.description}
           onChange={handleInputChange}
           className="border p-2 rounded"
+          required
         />
         <input
           type="number"
@@ -131,11 +159,12 @@ export default function ProductForm({ productId }) {
           value={form.stock}
           onChange={handleInputChange}
           className="border p-2 rounded"
+          required
         />
 
         <div>
           <label className="block font-medium mb-1">Images</label>
-          <input type="file" multiple accept="image/*" onChange={handleFileChange} />
+          <input type="file" required multiple accept="image/*" onChange={handleFileChange} />
           <div className="flex flex-wrap gap-2 mt-2">
             {preview.map((src, idx) => (
               <img key={idx} src={src} className="w-20 h-20 object-cover rounded" alt="preview" />
