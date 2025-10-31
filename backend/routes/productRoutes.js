@@ -81,7 +81,38 @@ router.post(
   }
 );
 
+// ✅ Get all categories with products grouped by category
+router.get("/categories-with-products", async (req, res) => {
+  try {
+    const products = await Product.find();
 
+    const grouped = {};
+
+    products.forEach((p) => {
+      if (!grouped[p.category]) {
+        grouped[p.category] = {
+          categoryName: p.category,
+          categoryImage: p.categoryImage?.[0]?.url || "",
+          products: [],
+        };
+      }
+
+      grouped[p.category].products.push({
+        _id: p._id,
+        name: p.name,
+        offerPrice: p.offerPrice,
+        previousPrice: p.previousPrice,
+        images: p.images,
+        isHotDeal: p.isHotDeal,
+      });
+    });
+
+    res.json(Object.values(grouped));
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 // // READ all products (public)
 // router.get("/", async (req, res) => {
 //   try {

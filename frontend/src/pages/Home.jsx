@@ -54,7 +54,7 @@ export default function Home() {
                     <img
                       src={p.images[0].url}
                    alt={p.name}
-                   className="w-full h-72 object-cover"
+                   className=" w-[70%] m-auto h-72 object-cover"
                  />
                </Link>
               )}
