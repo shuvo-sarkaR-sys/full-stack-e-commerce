@@ -89,12 +89,12 @@ console.log(offers)
         )}
       </div>
 
-      <div className="mx-18">
+      <div className="md:mx-18 mx-4">
         <Swiper
           modules={[Autoplay]}
           spaceBetween={40}
           breakpoints={{
-            320: { slidesPerView: 1 },
+            320: { slidesPerView: 2 },
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },
             1280: { slidesPerView: 4 },
@@ -121,11 +121,11 @@ console.log(offers)
                   <img
                     src={product.images[0].url}
                     alt={product.name}
-                    className="w-[80%] m-auto h-72 object-cover rounded-lg"
+                    className="w-[70%] m-auto   rounded-lg"
                   />
-                  <h3 className="font-semibold mt-2">{product.name}</h3>
+                  <h3 className="font-semibold line-clamp-1 mt-2">{product.name}</h3>
 
-                  <div className="mt-2 flex items-center justify-between">
+                  <div className="mt-2 flex flex-wrap-reverse items-center justify-between">
                     <span className="text-gray-500 text-sm line-through mr-2">
                       Regular Price: ${price}
                     </span>

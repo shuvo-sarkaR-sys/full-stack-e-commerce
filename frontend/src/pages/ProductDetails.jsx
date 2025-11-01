@@ -52,7 +52,7 @@ const ProductDetails = () => {
     : price;
 
   // Example color options — can come from backend
-  const colorOptions = product.colors || ["red", "blue", "green", "black"];
+  const colorOptions = product.colors || ["white", "goldenrod", "green", "black"];
 
   return (
     <div>
@@ -87,13 +87,13 @@ const ProductDetails = () => {
         <div>
           <h1 className="text-3xl font-semibold">{product.name}</h1>
 
-          <p className="text-gray-500 mt-2 line-through">
-            Regular Price: ${price}
-          </p>
-          <p className="text-lg font-bold text-green-600">
+          
+          <p className="text-lg mt-5 font-bold text-green-600">
             Offer Price: ${discountedPrice.toFixed(2)}
           </p>
-
+<p className="text-gray-500  line-through">
+            Regular Price: ${price}
+          </p>
           {/* === COLOR VARIETIES === */}
           <div className="mt-5">
             <p className="font-semibold mb-2">Available Colors:</p>

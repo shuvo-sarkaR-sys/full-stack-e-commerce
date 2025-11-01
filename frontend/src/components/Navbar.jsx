@@ -20,12 +20,12 @@ const Navbar = () => {
   };
   return (
     <div className='bg-white-800 border-b pb-2  border-gray-300'>
-    <div className="bg-white-800  text-black  flex items-center justify-between    py-5 px-12">
+    <div className="bg-white-800  text-black  flex flex-wrap items-center justify-between    py-5 px-12">
       <h1 className="text-4xl font-bold">E-commerce</h1>
       <form onSubmit={handleSearch} className='flex items-center'>
         <input
           type="text"
-          className="bg-white-700 border w-[400px] border-gray-300 rounded-l py-2 px-4"
+          className="bg-white-700 border w-full md:w-[400px] border-gray-300 rounded-l py-2 px-4"
           placeholder="Search Product & Best deals"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -56,7 +56,7 @@ const Navbar = () => {
        
     </div>
     <div className='flex text-[#425A8B] justify-between mx-12'>
-      <ul className='flex gap-5'>
+      <ul className='flex flex-wrap gap-5'>
         <Link to="/"><li>Home</li></Link>
         <Link to="/category"><li>Category</li></Link>
         <Link to="/brands"><li>Brand</li></Link>

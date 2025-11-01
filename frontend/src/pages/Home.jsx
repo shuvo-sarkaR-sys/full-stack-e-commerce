@@ -39,12 +39,12 @@ export default function Home() {
      
       <SpecialOfferSlider/>
      
-      <h1 className="text-3xl font-bold m-10">All Products</h1>
+      <h1 className="text-3xl font-bold mx-18 my-10">All Products</h1>
 
       {products.length === 0 ? (
         <p>No products found.</p>
       ) : (
-        <div className="grid mx-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+        <div className="grid mx-4 md:mx-18 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-10">
           {products.map((p) => { 
             const price = p.offerPrice || p.previousPrice || 0;
 
@@ -60,7 +60,7 @@ export default function Home() {
                     <img
                       src={p.images[0].url}
                    alt={p.name}
-                   className=" w-[70%] m-auto h-72 object-cover"
+                   className=" w-[65%] m-auto  mt-4  "
                  />
                </Link>
               )}

@@ -38,7 +38,7 @@ export default function CategoryList() {
   };
 
   return (
-    <div className="ml-16">
+    <div className="md:ml-16 ml-4">
       <h2 className="text-2xl text-[#425A8B] font-bold m-4">Categories</h2>
       <p className="ml-4 text-[#425A8B] -mt-4">
         Choose your necessary products from this feature categories.
