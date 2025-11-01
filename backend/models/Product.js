@@ -12,6 +12,9 @@ const productSchema = new mongoose.Schema({
   categoryImage: [{ url: String, public_id: String }],
   stock: { type: Number, default: 0 },
    isHotDeal: { type: Boolean, default: false },
+   heroOffer: { type: Boolean, default: false },
+   specialOffer: { type: Boolean, default: false },
+offerEndTime: { type: Date, default: null },
     discount: { type: Number, default: 0 }, 
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 }, { timestamps: true });

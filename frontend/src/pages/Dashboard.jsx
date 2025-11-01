@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductForm from "../components/ProductForm";
 import ProductList from "../components/ProductList";
 import HotDealManager from "../components/HotDealManager";
+import SpecialOfferManager from "../components/SpecialOfferManager";
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [fileList, setFileList] = useState([]);
@@ -96,6 +97,7 @@ console.log('token', token);
         <ProductList/>
       )}
        <HotDealManager/>
+       <SpecialOfferManager/>
     </div>
   );
 }

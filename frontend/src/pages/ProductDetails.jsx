@@ -2,44 +2,40 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { use } from "react";
 
 const ProductDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [login, setIsLogin] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(""); // 👈 For changing main image
+  const [selectedColor, setSelectedColor] = useState(""); // 👈 For color variety
+
   useEffect(() => {
     const token = localStorage.getItem("usertoken");
     setIsLogin(!!token);
   }, []);
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/products/${slug}`);
         setProduct(res.data);
+        setSelectedImage(res.data.images?.[0]?.url || ""); // Default main image
       } catch (error) {
         console.error("Failed to fetch product:", error);
       }
     };
-
     fetchProduct();
   }, [slug]);
 
   const handleAddToCart = async (productId) => {
-     
-
     try {
       const token = localStorage.getItem("usertoken");
-      console.log("Using token:", token);
       await axios.post(
         "http://localhost:5000/api/cart/add",
         { productId, quantity: 1 },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Product added to cart!");
     } catch (error) {
@@ -55,34 +51,94 @@ const ProductDetails = () => {
     ? price - (price * product.discount) / 100
     : price;
 
+  // Example color options — can come from backend
+  const colorOptions = product.colors || ["red", "blue", "green", "black"];
+
   return (
     <div>
       <Navbar />
-      <div className="max-w-4xl mx-auto p-4">
-        <img
-          src={product.images?.[0]?.url || "/placeholder.jpg"}
-          alt={product.name}
-          className="w-full h-80 object-cover rounded"
-        />
-        <h1 className="text-2xl font-bold mt-4">{product.name}</h1>
-        <p className="text-gray-600 mt-2 line-through">
-          Regular Price: ${price}
-        </p>
-        <p className="text-black-500 font-bold">
-          Offer Price: ${discountedPrice.toFixed(2)}
-        </p>
-        <p className="mt-4">{product.description}</p>
-        {login ? (
-          <button onClick={() => handleAddToCart(product._id)} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
-            Add to Cart
-          </button>
-        ) : (
-          <button onClick={() => navigate('/userlogin')} className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
-            Login to Add to Cart
-          </button>
-        )}
 
+      <div className="max-w-5xl mx-auto p-4 grid md:grid-cols-2 gap-8">
+        {/* === LEFT: IMAGE SECTION === */}
+        <div>
+          {/* Main Image */}
+          <img
+            src={selectedImage || "/placeholder.jpg"}
+            alt={product.name}
+            className="w-auto h-96 object-cover"
+          />
+
+          {/* Thumbnails */}
+          <div className="flex mt-4 gap-3 overflow-x-auto">
+            {product.images?.map((img, i) => (
+              <img
+                key={i}
+                src={img.url}
+                alt={`thumb-${i}`}
+                onClick={() => setSelectedImage(img.url)} // 👈 Change main image
+                className={`w-20 h-20 object-cover border-2 rounded cursor-pointer transition
+                ${selectedImage === img.url ? "border-blue-500" : "border-gray-200"}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* === RIGHT: PRODUCT INFO === */}
+        <div>
+          <h1 className="text-3xl font-semibold">{product.name}</h1>
+
+          <p className="text-gray-500 mt-2 line-through">
+            Regular Price: ${price}
+          </p>
+          <p className="text-lg font-bold text-green-600">
+            Offer Price: ${discountedPrice.toFixed(2)}
+          </p>
+
+          {/* === COLOR VARIETIES === */}
+          <div className="mt-5">
+            <p className="font-semibold mb-2">Available Colors:</p>
+            <div className="flex gap-3">
+              {colorOptions.map((color, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSelectedColor(color)}
+                  className={`w-8 h-8 rounded-full cursor-pointer border-2 
+                    ${selectedColor === color ? "border-black scale-110" : "border-gray-300"} 
+                  `}
+                  style={{ backgroundColor: color }}
+                  title={color}
+                ></div>
+              ))}
+            </div>
+            {selectedColor && (
+              <p className="mt-2 text-sm text-gray-600">
+                Selected color: <span className="font-semibold">{selectedColor}</span>
+              </p>
+            )}
+          </div>
+
+          {/* === BUTTONS === */}
+          {login ? (
+            <button
+              onClick={() => handleAddToCart(product._id)}
+              className="bg-orange-500 text-white py-2 px-6 rounded mt-6 hover:bg-blue-600 transition"
+            >
+              Add to Cart
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/userlogin")}
+              className="bg-orange-500 text-white py-2 px-6 rounded mt-6 hover:bg-blue-600 transition"
+            >
+              Login to Add to Cart
+            </button>
+          )}
+
+         
+        </div>
       </div>
+       {/* === DESCRIPTION === */}
+          <p className="mt-6 w-[80%]  mx-auto text-gray-700">{product.description}</p>
     </div>
   );
 };

@@ -14,7 +14,6 @@ import cloudinary from "../config/cloudinary.js";
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// CREATE product (admin)
 router.post(
   "/",
   upload.fields([
@@ -23,10 +22,22 @@ router.post(
   ]),
   async (req, res) => {
     try {
-      const { name, previousPrice, offerPrice, brand, description, category, stock } = req.body;
-      const slug = slugify(name || Date.now().toString(), { lower: true, strict: true });
+      const {
+        name,
+        previousPrice,
+        offerPrice,
+        brand,
+        description,
+        category,
+        stock,
+      } = req.body;
 
-      // Upload product images
+      const slug = slugify(name || Date.now().toString(), {
+        lower: true,
+        strict: true,
+      });
+
+      // 🟢 Upload product images
       const uploadedImages = [];
       const files = req.files.images || [];
 
@@ -38,24 +49,39 @@ router.post(
           );
           streamifier.createReadStream(file.buffer).pipe(stream);
         });
-        uploadedImages.push({ url: imageResult.secure_url, public_id: imageResult.public_id });
+        uploadedImages.push({
+          url: imageResult.secure_url,
+          public_id: imageResult.public_id,
+        });
       }
 
-      // ✅ Upload Category Image (single)
+      // 🟣 Check if category already exists
+      const existingCategoryProduct = await Product.findOne({
+        category: { $regex: `^${category}$`, $options: "i" }, // case-insensitive
+      });
+
       let uploadedCategoryImage = null;
-      const categoryFile = req.files?.categoryImage?.[0];
-      if (categoryFile) {
-        const categoryResult = await new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: "category-images" },
-            (error, result) => (error ? reject(error) : resolve(result))
-          );
-          streamifier.createReadStream(categoryFile.buffer).pipe(stream);
-        });
-        uploadedCategoryImage = {
-          url: categoryResult.secure_url,
-          public_id: categoryResult.public_id,
-        };
+
+      if (existingCategoryProduct && existingCategoryProduct.categoryImage) {
+        // ✅ Reuse existing category image
+        uploadedCategoryImage = existingCategoryProduct.categoryImage;
+        console.log("✅ Reused category image from existing category:", category);
+      } else {
+        // 🆕 Upload new category image if provided
+        const categoryFile = req.files?.categoryImage?.[0];
+        if (categoryFile) {
+          const categoryResult = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              { folder: "category-images" },
+              (error, result) => (error ? reject(error) : resolve(result))
+            );
+            streamifier.createReadStream(categoryFile.buffer).pipe(stream);
+          });
+          uploadedCategoryImage = {
+            url: categoryResult.secure_url,
+            public_id: categoryResult.public_id,
+          };
+        }
       }
 
       const product = new Product({
@@ -80,6 +106,7 @@ router.post(
     }
   }
 );
+
 
 // ✅ Get all categories with products grouped by category
 router.get("/categories-with-products", async (req, res) => {
@@ -144,8 +171,44 @@ router.get("/", async (req, res) => {
   }
 });
 
+// ✅ Set Hero Offer (only one product can be hero at a time)
+router.put("/hero/:id", async (req, res) => {
+  try {
+    // Remove heroOffer from all other products
+    await Product.updateMany({}, { $set: { heroOffer: false } });
 
- 
+    // Set the selected product as hero
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { heroOffer: true },
+      { new: true }
+    );
+
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
+    res.json({ message: "Hero offer set successfully", product });
+  } catch (error) {
+    console.error("Hero offer update error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+//  specialOffer 
+ router.put("/special-offer/:id",  async (req, res) => {
+  try {
+    const { specialOffer, offerEndTime, discount } = req.body;
+
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { specialOffer, offerEndTime, discount },
+      { new: true }
+    );
+
+    res.json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating special offer" });
+  }
+});
 
 // 🔍 Search Products by name (case-insensitive)
 router.get("/search", async (req, res) => {

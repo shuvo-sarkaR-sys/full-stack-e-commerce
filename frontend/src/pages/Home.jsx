@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Category from "../components/Category";
+import SpecialOfferSlider from "../components/SpecialOfferSlider";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // loading state
@@ -35,6 +36,9 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Category />
+     
+      <SpecialOfferSlider/>
+     
       <h1 className="text-3xl font-bold m-10">All Products</h1>
 
       {products.length === 0 ? (
@@ -43,11 +47,13 @@ export default function Home() {
         <div className="grid mx-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
           {products.map((p) => { 
             const price = p.offerPrice || p.previousPrice || 0;
+
             const discountedPrice = p.discount
               ? price - (price * p.discount) / 100
               : price;
 
             return (
+               
               <div key={p._id} className=" rounded-lg overflow-hidden border border-gray-200 hover:shadow-md  ">
                 {p.images?.[0]?.url && (
                   <Link to={`/product/${p.slug}`}>
@@ -61,21 +67,22 @@ export default function Home() {
               <div className="p-4">
                 
                <Link to={`/product/${p.slug}`}>
-                 <h3 className="text-lg font-semibold">{p.name}</h3>
+                 <h3 className="text-lg line-clamp-1 font-semibold">{p.name}</h3>
                </Link>
                <div className="flex  text-sm mb-3 justify-between">
-                <p className="text-gray-700 line-through">Regular Price: ${price}</p>
+                <p className="text-gray-700 line-through">Regular Price: ${p.previousPrice}</p>
                 <p className="text-black-500 font-bold">Offer Price: ${discountedPrice.toFixed(2)}</p>
                 </div>
                 <Link to={`/product/${p.slug}`}>
-                  <button className="bg-blue-500 cursor-pointer text-white py-2 w-full rounded">Buy Now</button>
+                  <button className="bg-orange-500 hover:bg-[#425A8B] cursor-pointer text-white py-2 w-full rounded">Buy Now</button>
                 </Link>
               </div>
             </div>
           )})}
         </div>
+        
       )}
-      
-    </div>
+      </div>
+    
   );
 }

@@ -17,7 +17,7 @@ export default function ProductForm({ productId }) {
   const [categoryImage, setCategoryImage] = useState([]);
   const [categoryPreview, setCategoryPreview] = useState([]);
   const navigate = useNavigate();
- console.log('api base url', API_BASE_URL);
+  console.log('api base url', API_BASE_URL);
   // Load existing product for edit
   useEffect(() => {
     if (productId) {
@@ -49,7 +49,7 @@ export default function ProductForm({ productId }) {
     setCategoryPreview(urls);
     return () => urls.forEach(url => URL.revokeObjectURL(url));
   }, [categoryImage]);
-const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   }
@@ -65,12 +65,16 @@ const handleInputChange = (e) => {
     e.preventDefault();
     const fd = new FormData();
     Object.entries(form).forEach(([key, value]) => fd.append(key, value));
-    if(categoryImage.length > 0){ 
-       fd.append("categoryImage", categoryImage[0]); // ✅ only one file
-} 
+
+    
+
+    if (categoryImage.length > 0) {
+      fd.append("categoryImage", categoryImage[0]); // ✅ only one file
+    }
     images.forEach(img => fd.append("images", img));
 
     try {
+      
       const res = await fetch(
         productId
           ? `${API_BASE_URL}/products/${productId}`
@@ -86,7 +90,7 @@ const handleInputChange = (e) => {
       }
 
       alert(productId ? "Product updated" : "Product created");
-      
+
     } catch (error) {
       console.error("Save product error:", error);
       alert("Error saving product");
@@ -137,7 +141,7 @@ const handleInputChange = (e) => {
           required
         />
         <label htmlFor="categoryImage" className="block   mb-1">Category Image</label>
-        <input type="file" accept="image/*" placeholder="Category Image"  onChange={handleCategoryFile} />
+        <input type="file" accept="image/*" placeholder="Category Image" onChange={handleCategoryFile} />
         <div className="flex flex-wrap gap-2 mt-2">
           {categoryPreview.map((src, idx) => (
             <img key={idx} src={src} className="w-20 h-20 object-cover rounded" alt="preview" />
