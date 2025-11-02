@@ -59,11 +59,11 @@ console.log(offers)
 
   return (
     <div className="my-8">
-      <div className="mx-18   justify-between items-center mb-5 flex">
-        <h2 className="text-3xl text-[#425A8B] font-bold   text-center">Latest Deals</h2>
+      <div className="md:mx-18 mx-4  justify-between items-center mb-5 flex">
+        <h2 className="md:text-3xl text-xl text-[#425A8B] font-bold   text-center">Latest Deals</h2>
 
         {offers.length > 0 && (
-          <div className="text-lg  flex items-center gap-2">
+          <div className="text-lg  flex flex-wrap items-center gap-2">
             <span className="text-[#425A8B] font-semibold">Offer ends in:</span>
             {(() => {
               const parts = getRemainingParts(offers[0].offerEndTime);
@@ -99,7 +99,7 @@ console.log(offers)
             1024: { slidesPerView: 3 },
             1280: { slidesPerView: 4 },
           }}
-          autoplay={{ delay: 3000, disableOnInteraction: false }}
+          autoplay={{ delay: 3000}}
           loop={true}
         >
           {offers.map((product) => {

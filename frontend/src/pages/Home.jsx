@@ -67,14 +67,14 @@ export default function Home() {
               <div className="p-4">
                 
                <Link to={`/product/${p.slug}`}>
-                 <h3 className="text-lg line-clamp-1 font-semibold">{p.name}</h3>
+                 <h3 className="text-lg text-[#425A8B] line-clamp-1 font-semibold">{p.name}</h3>
                </Link>
-               <div className="flex  text-sm mb-3 justify-between">
+               <div className="flex flex-wrap-reverse text-sm mb-3 justify-between">
                 <p className="text-gray-700 line-through">Regular Price: ${p.previousPrice}</p>
-                <p className="text-black-500 font-bold">Offer Price: ${discountedPrice.toFixed(2)}</p>
+                <p className="text-[#425A8B] font-bold">Offer Price: ${discountedPrice.toFixed(2)}</p>
                 </div>
                 <Link to={`/product/${p.slug}`}>
-                  <button className="bg-orange-500 hover:bg-[#425A8B] cursor-pointer text-white py-2 w-full rounded">Buy Now</button>
+                  <button className="bg-transparent hover:bg-[#425A8B] hover:text-white cursor-pointer text-[#425A8B] border border-[#425A8B] py-2 w-full rounded">Buy Now</button>
                 </Link>
               </div>
             </div>

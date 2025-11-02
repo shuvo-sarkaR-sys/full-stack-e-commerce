@@ -58,7 +58,7 @@ const ProductDetails = () => {
     <div>
       <Navbar />
 
-      <div className="max-w-5xl mx-auto p-4 grid md:grid-cols-2 gap-8">
+      <div className="max-w-6xl mx-auto p-4 grid md:grid-cols-2 gap-8">
         {/* === LEFT: IMAGE SECTION === */}
         <div>
           {/* Main Image */}
@@ -85,7 +85,7 @@ const ProductDetails = () => {
 
         {/* === RIGHT: PRODUCT INFO === */}
         <div>
-          <h1 className="text-3xl font-semibold">{product.name}</h1>
+          <h1 className="text-5xl text-[#425A8B] font-bold">{product.name}</h1>
 
           
           <p className="text-lg mt-5 font-bold text-green-600">
@@ -138,8 +138,14 @@ const ProductDetails = () => {
         </div>
       </div>
        {/* === DESCRIPTION === */}
-          <p className="mt-6 w-[80%]  mx-auto text-gray-700">{product.description}</p>
-    </div>
+{product && product.description ? (
+  <div
+    dangerouslySetInnerHTML={{ __html: product.description }}
+    className="mt-6 max-w-5xl mx-auto prose prose-lg    text-gray-700"
+  />
+) : (
+  <p className="text-center text-gray-500">Loading description...</p>
+)}    </div>
   );
 };
 

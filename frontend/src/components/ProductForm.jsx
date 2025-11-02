@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../api/API";
 import { useNavigate } from "react-router-dom";
-
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 export default function ProductForm({ productId }) {
   const [form, setForm] = useState({
     name: "",
@@ -53,6 +54,10 @@ export default function ProductForm({ productId }) {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   }
+  //  Handle description from React Quill
+  const handleDescriptionChange = (value) => {
+    setForm((prev) => ({ ...prev, description: value }));
+  };
 
   const handleFileChange = (e) => {
     setImages(Array.from(e.target.files));
@@ -96,9 +101,18 @@ export default function ProductForm({ productId }) {
       alert("Error saving product");
     }
   };
-
+ // Optional toolbar customization for React Quill
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white rounded shadow">
+    <form onSubmit={handleSubmit} className="w-full mx-auto p-4 bg-white rounded shadow">
       <h2 className="text-lg font-semibold mb-3">
         {productId ? "Edit Product" : "Add New Product"}
       </h2>
@@ -110,7 +124,7 @@ export default function ProductForm({ productId }) {
           placeholder="Name"
           value={form.name}
           onChange={handleInputChange}
-          className="border p-2 rounded"
+          className="border border-gray-300 p-2 rounded"
           required
         />
         <input
@@ -119,7 +133,7 @@ export default function ProductForm({ productId }) {
           placeholder="Previous Price"
           value={form.previousPrice}
           onChange={handleInputChange}
-          className="border p-2 rounded"
+          className="border p-2 border-gray-300 rounded"
           required
         />
         <input
@@ -128,7 +142,7 @@ export default function ProductForm({ productId }) {
           placeholder="Offer Price"
           value={form.offerPrice}
           onChange={handleInputChange}
-          className="border p-2 rounded"
+          className="border border-gray-300 p-2 rounded"
           required
         />
         <input
@@ -148,14 +162,17 @@ export default function ProductForm({ productId }) {
           ))}
         </div>
         <input type="text" name="brand" placeholder="Brand Name" value={form.brand} onChange={handleInputChange} required className="border p-2 rounded" />
-        <textarea
-          name="description"
-          placeholder="Description"
+       
+        <label className="block mb-1 font-medium">Description</label>
+        <ReactQuill
+          theme="snow"
           value={form.description}
-          onChange={handleInputChange}
-          className="border p-2 rounded"
-          required
+          onChange={handleDescriptionChange}
+          modules={modules}
+          className="h-40"
+          placeholder="Write detailed product description..."
         />
+         <br />
         <input
           type="number"
           name="stock"

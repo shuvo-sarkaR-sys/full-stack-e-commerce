@@ -7,9 +7,7 @@ import HotDealManager from "../components/HotDealManager";
 import SpecialOfferManager from "../components/SpecialOfferManager";
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
-  const [fileList, setFileList] = useState([]);
-  const [form, setForm] = useState({ name: "", price: 0, description: "", category: "", stock: 0 });
-  const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("token"); // admin JWT
@@ -33,61 +31,29 @@ console.log('token', token);
       setLoading(false);
     }
   };
+ 
 
-  const handleFileChange = (e) => setFileList(e.target.files);
-
-  const submit = async (e) => {
-    e.preventDefault();
-    const fd = new FormData();
-    fd.append("name", form.name);
-    fd.append("price", form.price);
-    fd.append("description", form.description);
-    fd.append("category", form.category);
-    fd.append("stock", form.stock);
-    for (const file of fileList) fd.append("images", file);
-
-    try {
-      await axios.post("http://localhost:5000/api/products", fd, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setForm({ name: "", price: 0, description: "", category: "", stock: 0 });
-      setFileList([]);
-      fetchProducts();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create product");
-    }
-  };
-
-  const remove = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
-    try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      fetchProducts();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete product");
-    }
-  };
+   
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Admin Dashboard</h2>
-        <button className="bg-red-600 py-2 rounded-xl cursor-pointer hover:bg-red-500 px-6" onClick={() => {
+      <div className="flex border-b border-gray-300 pb-4 justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <button className="bg-orange-600 py-2 rounded-xl text-white cursor-pointer hover:bg-red-500 px-6" onClick={() => {
           localStorage.removeItem("token");
           window.location.href = "/";
         }}>LogOut</button>
       </div>
-
+      {/* side nav start from here */}
+      <nav className="fixed left-0 p-4 w-80 border-gray-300 border-r top-0 h-full bg-white">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+      </nav>
+      <div className="flex">
+        <div className="w-[25%]"></div>
+        <div className="w-[70%]">
       <ProductForm />
 
       <h3 className="text-xl font-semibold mb-2">Your Products</h3>
@@ -98,6 +64,8 @@ console.log('token', token);
       )}
        <HotDealManager/>
        <SpecialOfferManager/>
+       </div>
+       </div>
     </div>
   );
 }

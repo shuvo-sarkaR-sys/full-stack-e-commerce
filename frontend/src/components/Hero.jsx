@@ -32,7 +32,7 @@ const Hero = () => {
             <img
               src={hero1}
               alt=''
-              className="w-full absolute bottom-0 right-0 md:object-cover rounded-2xl"
+              className="w-full absolute bottom-0 right-0 md:object-cover  "
             />
             <div className='absolute top-0 p-8  md:p-16 text-[#425A8B]'>
               <p>TRENDING NOW</p>
@@ -48,7 +48,7 @@ const Hero = () => {
               <img
               src={hero2}
               alt=''
-              className="w-full absolute bottom-0 right-0 md:object-cover rounded-2xl"
+              className="w-full absolute bottom-0 right-0 md:object-cover  "
             />
             <div className='absolute inset-0 p-8 md:p-16 text-[#425A8B]'>
               <p>TOP SALE THIS MONTH</p>
@@ -65,7 +65,7 @@ const Hero = () => {
               <img
               src={hero3}
               alt=''
-              className="w-full absolute bottom-0 right-0 md:object-cover rounded-2xl"
+              className="w-full absolute bottom-0 right-0 md:object-cover "
             />
             <div className='absolute inset-0 p-8 md:p-16 text-[#425A8B]'>
               <p>TRENDING NOW</p>

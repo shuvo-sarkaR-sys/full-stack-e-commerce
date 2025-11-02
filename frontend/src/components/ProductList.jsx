@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -70,7 +71,9 @@ export default function ProductList() {
       setEditForm({ ...editForm, [name]: value });
     }
   };
-
+const handleDescriptionChange = (value) =>{
+    setEditForm((prev) => ({ ...prev, description: value }));
+}
   // ✅ Submit updated product
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -106,15 +109,15 @@ export default function ProductList() {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">📦 Product List</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 md:gap-14">
         {products.map((p) => (
-          <div key={p._id} className="border rounded p-3 flex flex-col">
+          <div key={p._id} className="border border-gray-200 rounded p-3 flex flex-col">
             {/* ✅ Show first image */}
             {p.images && p.images.length > 0 ? (
               <img
                 src={p.images[0].url}
                 alt={p.name}
-                className="w-full h-40 object-cover rounded"
+                className="w-[65%] h-auto m-auto   rounded"
               />
             ) : (
               <div className="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-500">
@@ -122,8 +125,10 @@ export default function ProductList() {
               </div>
             )}
 
-            <h3 className="font-semibold mt-2">{p.name}</h3>
-            <p className="text-gray-700">${p.previousPrice}</p>
+            <h3 className="font-semibold line-clamp-1 mt-2">{p.name}</h3>
+            <div className="flex justify-between"><p className="text-gray-700 line-through">${p.previousPrice}</p>
+            <p>${p.offerPrice}</p>
+            </div>
             <p className="text-sm text-gray-500">{p.category}</p>
 
             <div className="flex gap-2 mt-3">
@@ -146,10 +151,10 @@ export default function ProductList() {
 
       {/* ✅ Edit Modal */}
       {editingProduct && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 bg-opacity-50 z-50">
+        <div className="fixed overflow-y-scroll inset-0 flex items-center justify-center bg-black/50 bg-opacity-50 z-50">
           <form
             onSubmit={handleUpdate}
-            className="bg-white p-6 rounded shadow-lg w-full max-w-md flex flex-col gap-3"
+            className="bg-white p-6 rounded shadow-lg w-full max-w-3xl flex flex-col gap-3"
           >
             <h3 className="text-xl font-semibold mb-2">Edit Product</h3>
 
@@ -186,16 +191,16 @@ export default function ProductList() {
               value={editForm.category}
               onChange={handleEditChange}
               placeholder="Category"
-              className="border p-2 rounded"
+              className="border  p-2 rounded"
             />
             <input type="text" name="brand" value={editForm.brand} onChange={handleEditChange} placeholder="Brand" className="border p-2 rounded" />
-            <textarea
+            <ReactQuill
               name="description"
               value={editForm.description}
-              onChange={handleEditChange}
+              onChange={handleDescriptionChange}
               placeholder="Description"
-              className="border p-2 rounded"
-            ></textarea>
+              className="border max-h-40   overflow-y-scroll overflow-x-scroll p-2 rounded"
+            ></ReactQuill>
 
             <input
               type="number"

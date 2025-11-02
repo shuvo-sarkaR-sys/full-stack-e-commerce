@@ -155,9 +155,9 @@ const HotDealManager = () => {
           {products.map((product) => (
             <tr key={product._id} className="border-b">
               <td className="p-2">{product.name}</td>
-              <td className="p-2">${product.previousPrice}</td>
+              <td className="p-2 text-center">${product.previousPrice}</td>
 
-              <td className="p-2">
+              <td className="p-2 text-center">
                 <button
                   className={`px-3 py-1 rounded ${
                     product.isHotDeal
@@ -176,7 +176,7 @@ const HotDealManager = () => {
                 </button>
               </td>
 
-              <td className="p-2">
+              <td className="p-2 items-center text-center">
                 <input
                   type="number"
                   value={product.discount || ""}
@@ -187,7 +187,7 @@ const HotDealManager = () => {
                 />
               </td>
 
-              <td className="p-2">
+              <td className="p-2 text-center">
                 <button
                   className={`px-3 py-1 rounded ${
                     product.heroOffer ? "bg-yellow-500 text-white" : "bg-gray-300"
