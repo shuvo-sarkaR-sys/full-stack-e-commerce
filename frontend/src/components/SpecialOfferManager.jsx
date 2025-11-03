@@ -40,10 +40,10 @@ const SpecialOfferManager = () => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Slider Special Offer Manager</h2>
-      <table className="w-full border text-center">
-        <thead className="bg-gray-200">
+      <table className="w-full border border-gray-300 text-center">
+        <thead className="bg-gray-200 ">
           <tr>
-            <th>Name</th>
+            <th className="py-2">Name</th>
             <th>Price</th>
             <th>Discount (%)</th>
             <th>Offer Ends</th>
@@ -52,14 +52,14 @@ const SpecialOfferManager = () => {
         </thead>
         <tbody>
           {products.map((p) => (
-            <tr key={p._id} className="border-b">
-              <td>{p.name}</td>
+            <tr key={p._id} className="border-b border-gray-300">
+              <td className="p-3">{p.name}</td>
               <td>${ p.offerPrice}</td>
               <td>
                 <input
                   type="number"
                   value={p.discount || ""}
-                  className="border p-1 w-20"
+                  className="border border-gray-300 p-1 w-20"
                   onChange={(e) =>
                     handleInputChange(p._id, "discount", e.target.value)
                   }
@@ -76,7 +76,7 @@ const SpecialOfferManager = () => {
                   onChange={(e) =>
                     handleInputChange(p._id, "offerEndTime", e.target.value)
                   }
-                  className="border p-1"
+                  className="border border-gray-300 p-1"
                 />
               </td>
               <td>

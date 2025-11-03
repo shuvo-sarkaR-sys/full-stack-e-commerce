@@ -1,1 +1,15 @@
- 
+ .box-1{
+    background-image: url("./assets/iphone-12.png");
+     background-position: right bottom;
+    background-repeat: no-repeat;
+ }
+ .box-2{
+    background-image: url("./assets/samsung.png");
+     background-position: right bottom;
+    background-repeat: no-repeat;
+ }
+ .box-3{
+    background-image: url("./assets/drone.png");
+     background-position: right bottom;
+    background-repeat: no-repeat;
+ }

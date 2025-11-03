@@ -19,9 +19,9 @@ const HotDeal = () => {
     : price;
 
   return (
-    <section className="p-6">
+    <section  >
       
-      <div className="w-[100%] h-[500px] relative mx-auto bg-[#FFF4F6] border border-gray-200 rounded-lg p-4 ">
+      <div className="w-full h-[500px] relative mx-auto bg-[#FFF4F6] border border-gray-200 rounded-lg p-4 ">
         <h2 className=" absolute bg-orange-500 text-white rounded-lg text-sm top-0 left-0 p-2 font-bold mb-4">Hot Deal</h2>
         <img
           src={hotDeal.images?.[0]?.url}

@@ -13,8 +13,8 @@ const Hero = () => {
     
 
   return (
-    <div className="  mt-0   w-full  ">
-      <div className="  inset-0 flex flex-wrap justify-between items-center w-[90%] m-auto text-white">
+    <div className="  p-3   w-full  ">
+      <div className="  inset-0 flex  md:flex-row sm:flex-col flex-col justify-between items-center md:w-[95%] m-auto text-white">
          <div className="md:w-[70%] w-full h-auto mx-auto ">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
