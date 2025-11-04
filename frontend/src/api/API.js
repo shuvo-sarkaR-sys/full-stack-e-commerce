@@ -5,7 +5,7 @@ import axios from "axios";
 // src/api/API.js
 export const API_BASE_URL = import.meta.env.MODE === "development"
     ? "http://localhost:5000/api"
-    : "https://your-backend-name.onrender.com/api";
+    : "https://full-stack-e-commerce-xq0m.onrender.com/api";
 
 // 2. Create the Axios instance, using the defined constant for consistency.
 const API = axios.create({
