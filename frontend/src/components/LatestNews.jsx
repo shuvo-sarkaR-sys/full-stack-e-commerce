@@ -29,7 +29,7 @@ const LatestNews = () => {
           autoplay={{ delay: 3000}}
           loop={true}
         > 
-          <SwiperSlide>
+          <SwiperSlide >
             <img src={image1} alt="" />
             <div className='flex gap-2 items-center w-fit px-3 py-1 mt-4 rounded-md bg-[#516da566]'><div className='w-2 h-2 rounded-full bg-[#29509f]'></div> <p>Development</p></div>
             <h1 className='text-2xl mt-3 font-bold text-gray-700'>HTML5- The Future of Web App Development</h1>
@@ -67,13 +67,9 @@ const LatestNews = () => {
           <div className='flex gap-4 border-gray-200 border rounded-md px-2 py-3 h-20'> <img src={secure} className='w-10' alt="" /><div><p className='font-semibold text-xl'>Secure Payments</p><p className='text-gray-400'>Shop with confidence</p></div></div>
           <div className='flex gap-4 border-gray-200 border rounded-md px-2 py-3 h-20'> <img src={voucher} className='w-10' alt="" /><div><p className='font-semibold text-xl'>Discount Vouchers</p><p className='text-gray-400'>Get the best deals</p></div></div>
          </div>
-         <div className='bg-[#0E224D] p-4 h-52 box-4'>
-          <h1 className='text-2xl font-bold text-white'>Latest Headphone Releases</h1>
-          <p className='text-white'>Discover the newest in headphone technology with our latest releases. Experience unparalleled sound quality and comfort.</p>
-          <div className='flex gap-4 mt-4'>
-            <button className='bg-white text-blue-950 px-4 py-2 rounded-md'>Shop Now</button>
-            <button className='bg-transparent border border-white text-white px-4 py-2 rounded-md'>Learn More</button>
-          </div>
+         <div className='bg-[#0E224D] p-4 h-56 box-4'>
+          <h1 className='text-4xl  mt-14 ml-10 font-bold text-white'>Subscrible & Get <span className='text-yellow-600'>10%</span> Discount</h1>
+           <p className='text-xl font-semibold text-white ml-10'>Get E-mail updates about our latest shop and special offers.</p>
           </div>
         </div>
   )

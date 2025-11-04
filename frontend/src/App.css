@@ -14,7 +14,8 @@
     background-repeat: no-repeat;
  }
  .box-4{
-    background-image: url("./assets/electronic.png");
-     background-position: right bottom;
+    background-image: url("./assets/bg-newsletter.svg");
+     background-position:  right 10px bottom 15px;
+      
     background-repeat: no-repeat;
  }

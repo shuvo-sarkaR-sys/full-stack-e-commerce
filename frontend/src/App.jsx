@@ -19,6 +19,7 @@ import SearchPage from './pages/SearchPage'
 import BrandList from './components/Brand'
 import BrandPage from './pages/BrandPage'
 import Checkout from './pages/ChackOut'
+import Footer from './components/Footer'
 function App() {
  
 
@@ -45,8 +46,10 @@ function App() {
 <Route path="/search" element={<SearchPage />} />
 <Route path="/checkout" element={<Checkout />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
-    </>)
+    </>
+  )
 }
 
 export default App
