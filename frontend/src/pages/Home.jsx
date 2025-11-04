@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
+import LatestNews from "../components/LatestNews";
 import Category from "../components/Category";
 import SpecialOfferSlider from "../components/SpecialOfferSlider";
 export default function Home() {
@@ -37,17 +38,17 @@ export default function Home() {
       <Hero />
       <Category />
      <div className="flex flex-wrap gap-4  mx-3  md:mx-18 mb-10 mt-10 ">
-      <div    className="box-1 sm:w-[47%]  w-full  md:w-[27%] text-[#425A8B] h-64  bg-[#DBECE5]     p-6 ">
+      <div    className="box-1 sm:w-[47%]  w-full  md:w-[46%] xl:w-[370px] text-[#425A8B] h-64  bg-[#DBECE5]     p-6 ">
         <p className="text-sm">Starting from $899</p>
         <h1 className="md:text-3xl text-xl my-2 font-bold">Iphone 13 Pro <br /> 128GB</h1>
         <p>Special Sale</p>
       </div>
-      <div   className=" box-2 w-full md:w-[33%] text-[#425A8B] h-64 bg-pink-100    p-6   ">
+      <div   className=" box-2 w-full md:w-1/2 xl:w-[450px] text-[#425A8B] h-64 bg-pink-100    p-6   ">
         <p className="text-sm">New Arrivals</p>
         <h1 className="md:text-3xl text-xl my-2 font-bold">Samsung <br />2022 Led TV</h1>
         <p>Special Sale</p>
       </div>
-      <div className=" box-3 w-full  md:w-[37%]   h-64 text-[#425A8B] bg-[#E8FCFF]   p-6  ">
+      <div className=" box-3 w-full  md:w-[370px] xl:w-[500px]  h-64 text-[#425A8B] bg-[#E8FCFF]   p-6  ">
         <h1 className=" text-[#425A8B] mb-2 text-3xl font-bold">Drone Quadcopter <br /> UAV - DJI Air 2S</h1>
         <p>Gimbal Camera,</p>
       </div>
@@ -97,6 +98,7 @@ export default function Home() {
         </div>
         
       )}
+      <LatestNews />
       </div>
     
   );
