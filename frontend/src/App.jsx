@@ -30,8 +30,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/admin' element={ <PrivateRoute><Dashboard/></PrivateRoute>}/>
-        <Route path='/login' element={<Login/>}/>
+         <Route path='/login' element={<Login/>}/>
         <Route path='/userlogin' element={<UserLogin/>}/>
                 <Route path="/userregister" element={<UserRegister />} />
         <Route path="/profile" element={<UserProfile />} />
@@ -49,8 +48,11 @@ function App() {
 <Route path="/checkout" element={<Checkout />} />
 <Route path='/about' element={<About/>}/>
 <Route path='/contact' element={<Contact/>}/>
+      
+       
+<Route path='/admin' element={ <PrivateRoute><Dashboard/></PrivateRoute>}/>
+
       </Routes>
-      <Footer/>
     </BrowserRouter>
     </>
   )

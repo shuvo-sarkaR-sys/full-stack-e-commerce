@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { API_BASE_URL } from "../api/API";
+import Footer from '../components/Footer'
 export default function BrandPage() {
     const { brand } = useParams();
     const [products, setProducts] = useState([]);
@@ -61,6 +62,8 @@ export default function BrandPage() {
                     </div>
                 )}
             </div>
+
+            <Footer/>
         </div>
     );
 }

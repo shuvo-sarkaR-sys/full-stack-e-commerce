@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { API_BASE_URL } from "../api/API";
+import UserOrders from "../components/UserOrders";
 const UserProfile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -50,6 +51,7 @@ const UserProfile = () => {
         Logout
       </button>
     </div>
+    <UserOrders />
     </div>
   );
 };

@@ -43,7 +43,7 @@ export default function CheckoutPage() {
 
   const handleCheckout = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("usertoken");
       const userId = localStorage.getItem("userId");
       const res = await axios.post(
         `${API_BASE_URL}/checkout/create`,
@@ -57,6 +57,36 @@ export default function CheckoutPage() {
       console.error("Checkout error:", err);
     }
   };
+
+const handleCOD = async () => {
+  try {
+    const token = localStorage.getItem("usertoken");
+    const userId = localStorage.getItem("userId");
+
+    const payload = {
+      userId,
+      items: cart.map((i) => ({
+        product: i.product._id,
+        quantity: i.quantity,
+        price: i.product.offerPrice || i.product.price,
+      })),
+      totalAmount: total,
+      address: form.address,
+      phone: form.phone,
+      email: form.email,
+    };
+
+    await axios.post(`${API_BASE_URL}/orders/create-cod`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    alert("Your order has been placed with Cash on Delivery!");
+  } catch (err) {
+    console.error("COD Order Error:", err);
+    alert("Failed to place COD order");
+  }
+};
+
 
   return (
     <div>
@@ -107,145 +137,26 @@ export default function CheckoutPage() {
           onChange={(e) => setForm({ ...form, address: e.target.value })}
         />
         <div>
-        <button
-          onClick={handleCheckout}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-        >
-          Proceed to Payment
-        </button>
-        <button>Cash On Delivery</button>
+       <div className="flex flex-col md:flex-row gap-3 mt-4">
+  <button
+    onClick={handleCheckout}
+    className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+  >
+    Pay Online
+  </button>
+
+  <button
+    onClick={handleCOD}
+    className="flex-1 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+  >
+    Cash on Delivery
+  </button>
+</div>
+
         </div>
       </div>
     </div>
     </div>
   );
 }
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-
-// export default function CheckoutPage() {
-//   const [cart, setCart] = useState([]);
-//   const [total, setTotal] = useState(0);
-//   const [form, setForm] = useState({ email: "", phone: "", address: "" });
-//   const [paymentMethod, setPaymentMethod] = useState("Online");
-
-//   useEffect(() => {
-//     fetchCart();
-//   }, []);
-
-//   const fetchCart = async () => {
-//     try {
-//       const token = localStorage.getItem("token");
-//       const res = await axios.get("http://localhost:5000/api/cart", {
-//         headers: { Authorization: `Bearer ${token}` },
-//       });
-//       setCart(res.data.items);
-//       const total = res.data.items.reduce(
-//         (sum, i) => sum + i.product.price * i.quantity,
-//         0
-//       );
-//       setTotal(total);
-//     } catch (err) {
-//       console.error("Error loading cart:", err);
-//     }
-//   };
-
-//   const handleCheckout = async () => {
-//     try {
-//       const token = localStorage.getItem("token");
-//       const userId = localStorage.getItem("userId");
-//       const res = await axios.post(
-//         "http://localhost:5000/api/checkout/create",
-//         { userId, ...form, paymentMethod },
-//         { headers: { Authorization: `Bearer ${token}` } }
-//       );
-
-//       if (paymentMethod === "Online" && res.data.url) {
-//         window.location.href = res.data.url; // Redirect to SSLCommerz
-//       } else {
-//         alert("✅ Order placed successfully with Cash on Delivery!");
-//         window.location.href = "/profile";
-//       }
-//     } catch (err) {
-//       console.error("Checkout error:", err);
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-3xl mx-auto p-6">
-//       <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-
-//       {/* Cart Items */}
-//       <div className="bg-white p-4 rounded-lg shadow">
-//         {cart.map((item, i) => (
-//           <div key={i} className="flex justify-between border-b py-2">
-//             <span>{item.product.name} × {item.quantity}</span>
-//             <span>৳{item.product.price * item.quantity}</span>
-//           </div>
-//         ))}
-//         <div className="flex justify-between mt-4 font-bold text-lg">
-//           <span>Total:</span>
-//           <span>৳{total}</span>
-//         </div>
-//       </div>
-
-//       {/* Customer Info */}
-//       <div className="mt-6 bg-white p-4 rounded-lg shadow space-y-3">
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           className="border p-2 w-full"
-//           value={form.email}
-//           onChange={(e) => setForm({ ...form, email: e.target.value })}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Phone"
-//           className="border p-2 w-full"
-//           value={form.phone}
-//           onChange={(e) => setForm({ ...form, phone: e.target.value })}
-//         />
-//         <textarea
-//           placeholder="Address"
-//           className="border p-2 w-full"
-//           value={form.address}
-//           onChange={(e) => setForm({ ...form, address: e.target.value })}
-//         />
-
-//         {/* Payment Option */}
-//         <div className="space-y-2">
-//           <label className="flex items-center space-x-2">
-//             <input
-//               type="radio"
-//               name="payment"
-//               value="Online"
-//               checked={paymentMethod === "Online"}
-//               onChange={(e) => setPaymentMethod(e.target.value)}
-//             />
-//             <span>Pay Online (SSLCommerz)</span>
-//           </label>
-
-//           <label className="flex items-center space-x-2">
-//             <input
-//               type="radio"
-//               name="payment"
-//               value="COD"
-//               checked={paymentMethod === "COD"}
-//               onChange={(e) => setPaymentMethod(e.target.value)}
-//             />
-//             <span>Cash on Delivery</span>
-//           </label>
-//         </div>
-
-//         <button
-//           onClick={handleCheckout}
-//           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-//         >
-//           {paymentMethod === "COD"
-//             ? "Place Order (Cash on Delivery)"
-//             : "Proceed to Payment"}
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
+ 

@@ -9,7 +9,8 @@ import bcrypt from "bcryptjs";
 import cartRoutes from "./routes/cartRoutes.js";
 import userAuthRoutes from "./routes/userAuthRoutes.js";
 import userRoutes from "./routes/userRoute.js";
-// import chackOut from "./routes/chackOut.js";
+import chackOut from "./routes/chackOut.js";
+import orderRoutes from "./routes/orderRoutes.js";
 dotenv.config();
 connectDB();
 const app = express();
@@ -54,7 +55,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/UserAuth", userAuthRoutes);
 app.use("/api/users", userRoutes); // For profile route
 app.use("/api/cart", cartRoutes);
-// app.use("/api/checkout", checkOut);
+app.use("/api/checkout", chackOut);
+app.use("/api/orders",  orderRoutes )
 // After DB connect
 
 const PORT = process.env.PORT || 5000;

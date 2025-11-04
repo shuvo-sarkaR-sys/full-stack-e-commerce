@@ -151,7 +151,7 @@ export default function ProductForm({ productId }) {
           placeholder="Category"
           value={form.category}
           onChange={handleInputChange}
-          className="border p-2 rounded"
+          className="border border-gray-300 p-2 rounded"
           required
         />
         <label htmlFor="categoryImage" className="block   mb-1">Category Image</label>
@@ -161,7 +161,7 @@ export default function ProductForm({ productId }) {
             <img key={idx} src={src} className="w-20 h-20 object-cover rounded" alt="preview" />
           ))}
         </div>
-        <input type="text" name="brand" placeholder="Brand Name" value={form.brand} onChange={handleInputChange} required className="border p-2 rounded" />
+        <input type="text" name="brand" placeholder="Brand Name" value={form.brand} onChange={handleInputChange} required className="border border-gray-300 p-2 rounded" />
        
         <label className="block mb-1 font-medium">Description</label>
         <ReactQuill
@@ -179,7 +179,7 @@ export default function ProductForm({ productId }) {
           placeholder="Stock"
           value={form.stock}
           onChange={handleInputChange}
-          className="border p-2 rounded"
+          className="border p-2 border-gray-300 rounded"
           required
         />
 

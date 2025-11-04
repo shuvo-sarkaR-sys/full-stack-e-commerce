@@ -8,7 +8,7 @@ import { API_BASE_URL } from "../api/API";
 const SpecialOfferSlider = () => {
   const [offers, setOffers] = useState([]);
   const [timeNow, setTimeNow] = useState(new Date()); // 🕒 Tracks current time continuously
-console.log(offers)
+ 
   // Fetch offers from backend
   useEffect(() => {
     const fetchOffers = async () => {
@@ -17,7 +17,7 @@ console.log(offers)
         const filtered = res.data.filter(
           (p) => p.specialOffer && new Date(p.offerEndTime) > new Date()
         );
-        console.log("special offers", filtered);
+       
         setOffers(filtered);
       } catch (err) {
         console.error("Error fetching offers:", err);
