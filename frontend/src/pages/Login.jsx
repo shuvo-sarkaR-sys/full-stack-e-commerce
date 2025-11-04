@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Navbar from '../components/Navbar'
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +20,8 @@ export default function Login() {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="max-w-sm mx-auto p-4">
       <h2 className="text-2xl mb-4">Admin Login</h2>
       <form onSubmit={handleLogin}>
@@ -41,6 +44,7 @@ export default function Login() {
         </button>
         <Link to='/forgot-password'><button>ResetPassword</button></Link>
       </form>
+    </div>
     </div>
   );
 }

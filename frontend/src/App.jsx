@@ -19,6 +19,8 @@ import SearchPage from './pages/SearchPage'
 import BrandList from './components/Brand'
 import BrandPage from './pages/BrandPage'
 import Checkout from './pages/ChackOut'
+import Contact from './pages/Contact'
+import About from './pages/About'
 import Footer from './components/Footer'
 function App() {
  
@@ -45,6 +47,8 @@ function App() {
 <Route path="/cart" element={<Cart />} />
 <Route path="/search" element={<SearchPage />} />
 <Route path="/checkout" element={<Checkout />} />
+<Route path='/about' element={<About/>}/>
+<Route path='/contact' element={<Contact/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
