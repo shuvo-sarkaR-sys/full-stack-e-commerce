@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-
+import { API_BASE_URL } from "../api/API";
 const ProductDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products/${slug}`);
+        const res = await axios.get(`${API_BASE_URL}/products/${slug}`);
         setProduct(res.data);
         setSelectedImage(res.data.images?.[0]?.url || ""); // Default main image
       } catch (error) {
@@ -33,7 +33,7 @@ const ProductDetails = () => {
     try {
       const token = localStorage.getItem("usertoken");
       await axios.post(
-        "http://localhost:5000/api/cart/add",
+        `${API_BASE_URL}/cart/add`,
         { productId, quantity: 1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );

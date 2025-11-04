@@ -13,9 +13,15 @@ import userRoutes from "./routes/userRoute.js";
 dotenv.config();
 connectDB();
 const app = express();
-app.use(cors({
-    origin: "http://localhost:5173"
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://full-stack-e-commerce-tan-ten.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 const createDefaultAdmin = async () => {
   try {

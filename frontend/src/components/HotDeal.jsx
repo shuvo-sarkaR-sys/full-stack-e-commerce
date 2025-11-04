@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../api/API";
 const HotDeal = () => {
   const [hotDeal, setHotDeal] = useState(null);
 
     useEffect(() => {
-    axios.get("http://localhost:5000/api/products").then((res) => {
+    axios.get(`${API_BASE_URL}/products`).then((res) => {
       const heroProduct = res.data.find((p) => p.heroOffer === true);
       setHotDeal(heroProduct);
     });

@@ -5,6 +5,7 @@ import ProductForm from "../components/ProductForm";
 import ProductList from "../components/ProductList";
 import HotDealManager from "../components/HotDealManager";
 import SpecialOfferManager from "../components/SpecialOfferManager";
+import { API_BASE_URL } from "../api/API";
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
    const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ console.log('token', token);
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get("http://localhost:5000/api/products", {
+      const { data } = await axios.get(`${API_BASE_URL}/products`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const productsArray = Array.isArray(data) ? data : data.products || [];

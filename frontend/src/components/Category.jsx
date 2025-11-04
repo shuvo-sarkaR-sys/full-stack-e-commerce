@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../api/API";
 export default function CategoryList() {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ export default function CategoryList() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(`${API_BASE_URL}/products`);
         // Group by category with image
         const unique = [];
         const map = new Map();

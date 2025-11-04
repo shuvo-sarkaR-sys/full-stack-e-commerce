@@ -7,6 +7,7 @@ import Hero from "../components/Hero";
 import LatestNews from "../components/LatestNews";
 import Category from "../components/Category";
 import SpecialOfferSlider from "../components/SpecialOfferSlider";
+import { API_BASE_URL } from "../api/API";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // loading state
@@ -16,7 +17,7 @@ export default function Home() {
     const loadProducts = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get("http://localhost:5000/api/products");
+        const { data } = await axios.get(`${API_BASE_URL}/products`);
         // Defensive: if backend returns { products: [...] } or array directly
         const productsArray = Array.isArray(data) ? data : data.products || [];
         setProducts(productsArray);

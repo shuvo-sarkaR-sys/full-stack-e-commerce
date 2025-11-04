@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { API_BASE_URL } from "../api/API";
 const SearchPage = () => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
@@ -13,7 +13,7 @@ const SearchPage = () => {
     if (query) {
       const fetchData = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/products/search?q=${query}`);
+          const res = await axios.get(`${API_BASE_URL}/products/search?q=${query}`);
           setProducts(res.data);
         } catch (error) {
           console.error("Search error:", error);

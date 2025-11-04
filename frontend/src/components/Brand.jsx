@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-
+import { API_BASE_URL } from "../api/API";
 export default function BrandList() {
     const [brands, setBrands] = useState([]);
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ export default function BrandList() {
     useEffect(() => {
         const fetchBrands = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/products");
+                const res = await axios.get(`${API_BASE_URL}/products`);
                 const unique = [...new Set(res.data.map((p) => p.brand))].filter(Boolean);
                 setBrands(unique);
             } catch (err) {

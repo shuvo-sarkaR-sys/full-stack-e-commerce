@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../api/API";
 const UserRegister = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -18,7 +18,7 @@ const UserRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/UserAuth/register", form);
+      const res = await axios.post(`${API_BASE_URL}/UserAuth/register`, form);
       localStorage.setItem("usertoken", res.data.token);
       navigate("/profile");
     } catch (err) {

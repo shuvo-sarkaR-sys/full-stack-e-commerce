@@ -4,13 +4,14 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../api/API";
 export default function CategoryPage() {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchFiltered = async () => {
-      const res = await axios.get(`http://localhost:5000/api/products?category=${category}`);
+      const res = await axios.get(`${API_BASE_URL}/products?category=${category}`);
       setProducts(res.data);
     };
     fetchFiltered();

@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../api/API";
 const SpecialOfferSlider = () => {
   const [offers, setOffers] = useState([]);
   const [timeNow, setTimeNow] = useState(new Date()); // 🕒 Tracks current time continuously
@@ -12,7 +13,7 @@ console.log(offers)
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(`${API_BASE_URL}/products`);
         const filtered = res.data.filter(
           (p) => p.specialOffer && new Date(p.offerEndTime) > new Date()
         );

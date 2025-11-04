@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { API_BASE_URL } from "../api/API";
 export default function CheckoutPage() {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState('');
@@ -14,7 +15,7 @@ export default function CheckoutPage() {
   const fetchCart = async () => {
     try {
       const token = localStorage.getItem("usertoken");
-      const res = await axios.get("http://localhost:5000/api/cart", {
+      const res = await axios.get(`${API_BASE_URL}/cart`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCart(res.data.items);
@@ -45,7 +46,7 @@ export default function CheckoutPage() {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userId");
       const res = await axios.post(
-        "http://localhost:5000/api/checkout/create",
+        `${API_BASE_URL}/checkout/create`,
         { userId, ...form },
         { headers: { Authorization: `Bearer ${token}` } }
       );

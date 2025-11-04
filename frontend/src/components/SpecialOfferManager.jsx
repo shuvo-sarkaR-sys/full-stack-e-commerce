@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { API_BASE_URL } from "../api/API";
 const SpecialOfferManager = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${API_BASE_URL}/products`)
       .then((res) => setProducts(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -14,7 +14,7 @@ const SpecialOfferManager = () => {
   const handleSpecialOffer = async (id, specialOffer, offerEndTime, discount) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/products/special-offer/${id}`,
+        `${API_BASE_URL}/products/special-offer/${id}`,
         { specialOffer: !specialOffer, offerEndTime, discount },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );

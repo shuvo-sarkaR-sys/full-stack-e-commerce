@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../api/API";
 const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +10,7 @@ const UserLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/UserAuth/login", { email, password });
+      const res = await axios.post(`${API_BASE_URL}/UserAuth/login`, { email, password });
       localStorage.setItem("usertoken", res.data.token);
       navigate("/profile");
     } catch (error) {

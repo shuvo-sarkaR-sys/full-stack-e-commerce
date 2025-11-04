@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+import { API_BASE_URL } from "../api/API";
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
@@ -18,7 +19,7 @@ export default function ProductList() {
   // ✅ Load products from backend
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products");
+      const res = await fetch(`${API_BASE_URL}/products`);
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -34,7 +35,7 @@ export default function ProductList() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
-    const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/products/${id}`, {
       method: "DELETE",
     });
 
@@ -90,7 +91,7 @@ const handleDescriptionChange = (value) =>{
       formData.append("images", file);
     });
 
-    const res = await fetch(`http://localhost:5000/api/products/${editingProduct}`, {
+    const res = await fetch(`${API_BASE_URL}/products/${editingProduct}`, {
       method: "PUT",
       body: formData,
     });

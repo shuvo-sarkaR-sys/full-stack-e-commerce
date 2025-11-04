@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../api/API";
 const Cart = () => {
   const [cart, setCart] = useState({ items: [] });
   const [loading, setLoading] = useState(false); // ✅ for loading spinner
@@ -13,7 +14,7 @@ const Cart = () => {
   const fetchCart = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/cart", { headers })
+      .get(`${API_BASE_URL}/cart`, { headers })
       .then(res => setCart(res.data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
@@ -26,7 +27,7 @@ const Cart = () => {
   const updateQuantity = (productId, quantity) => {
     setLoading(true);
     axios
-      .put("http://localhost:5000/api/cart/update", { productId, quantity }, { headers })
+      .put(`${API_BASE_URL}/cart/update`, { productId, quantity }, { headers })
       .then(() => fetchCart()) // ✅ refresh cart after update
       .catch(err => console.error(err));
   };
@@ -34,7 +35,7 @@ const Cart = () => {
   const removeItem = (productId) => {
     setLoading(true);
     axios
-      .delete(`http://localhost:5000/api/cart/remove/${productId}`, { headers })
+      .delete(`${API_BASE_URL}/cart/remove/${productId}`, { headers })
       .then(() => fetchCart()) // ✅ refresh after removal
       .catch(err => console.error(err));
   };
