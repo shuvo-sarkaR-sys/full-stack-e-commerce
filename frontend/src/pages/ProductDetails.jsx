@@ -142,7 +142,7 @@ const ProductDetails = () => {
 {product && product.description ? (
   <div
     dangerouslySetInnerHTML={{ __html: product.description }}
-    className="mt-6 max-w-5xl mx-auto prose prose-lg    text-gray-700"
+    className="mt-6 w-[90%] mb-5 md:max-w-5xl mx-auto prose prose-lg    text-gray-700"
   />
 ) : (
   <p className="text-center text-gray-500">Loading description...</p>

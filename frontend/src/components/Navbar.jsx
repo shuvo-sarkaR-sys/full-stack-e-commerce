@@ -26,7 +26,7 @@ const Navbar = () => {
     <div>
       <div className='bg-white-800 border-b pb-2  border-gray-300'>
         <div className="bg-white-800  text-black  flex  flex-wrap items-center justify-between    py-5 px-3 md:px-12">
-         <Link to="/"><h1 className="text-4xl font-bold">E-commerce</h1></Link><button onClick={handleNavClick} className='md:hidden block cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
+         <Link to="/"><h1 className="text-4xl font-bold">ShopSmart</h1></Link><button onClick={handleNavClick} className='md:hidden block cursor-pointer'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
           </svg>
           </button>
