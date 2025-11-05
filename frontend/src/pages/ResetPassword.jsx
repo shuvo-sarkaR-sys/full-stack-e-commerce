@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 export default function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -41,6 +43,8 @@ export default function ResetPassword() {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h2 className="text-2xl font-semibold mb-4">Reset Email & Password</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-80">
@@ -76,6 +80,9 @@ export default function ResetPassword() {
         </button>
       </form>
       {msg && <p className="mt-4 text-center">{msg}</p>}
+     
+    </div>
+     <Footer />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
@@ -34,6 +36,8 @@ export default function ForgotPassword() {
   };
 
   return (
+    <div>
+      <Navbar />
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h2 className="text-2xl font-semibold mb-4">Forgot Password</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-80">
@@ -54,6 +58,8 @@ export default function ForgotPassword() {
         </button>
       </form>
       {msg && <p className="mt-4 text-center">{msg}</p>}
+    </div>
+    <Footer/>
     </div>
   );
 }

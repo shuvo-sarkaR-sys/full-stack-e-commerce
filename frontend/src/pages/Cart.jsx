@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Footer from '../components/Footer'
 const Cart = () => {
   const [cart, setCart] = useState({ items: [] });
   const [loading, setLoading] = useState(false); // ✅ for loading spinner
@@ -139,7 +140,9 @@ const Cart = () => {
           </div>
         </div>
       )}
-    </div></div>
+    </div>
+    <Footer/>
+    </div>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { API_BASE_URL } from "../api/API";
+import Footer from "../components/Footer";
 export default function CheckoutPage() {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState('');
@@ -156,6 +157,7 @@ const handleCOD = async () => {
         </div>
       </div>
     </div>
+    <Footer/>
     </div>
   );
 }

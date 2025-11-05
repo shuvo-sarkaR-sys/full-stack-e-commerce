@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Footer from "../components/Footer";
 export default function CategoryPage() {
   const { category } = useParams();
   const [products, setProducts] = useState([]);
@@ -42,6 +43,7 @@ export default function CategoryPage() {
         </div>
       )}
       </div>
+      <Footer/>
     </div>
   );
 }

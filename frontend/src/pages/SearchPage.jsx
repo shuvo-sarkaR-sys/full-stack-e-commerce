@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Footer from "../components/Footer";
 const SearchPage = () => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
@@ -46,7 +47,9 @@ const SearchPage = () => {
       ) : (
         <p>No products found.</p>
       )}
-    </div></div>
+    </div>
+    <Footer/>
+    </div>
   );
 };
 

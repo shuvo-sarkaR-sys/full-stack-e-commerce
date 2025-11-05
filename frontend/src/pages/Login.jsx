@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
 import Navbar from '../components/Navbar'
+import Footer from "../components/Footer";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +46,7 @@ export default function Login() {
         <Link to='/forgot-password'><button>ResetPassword</button></Link>
       </form>
     </div>
+    <Footer/>
     </div>
   );
 }

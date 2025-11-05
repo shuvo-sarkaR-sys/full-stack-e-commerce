@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { API_BASE_URL } from "../api/API";
+import Footer from "../components/Footer";
 const ProductDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -145,7 +146,9 @@ const ProductDetails = () => {
   />
 ) : (
   <p className="text-center text-gray-500">Loading description...</p>
-)}    </div>
+)}   
+<Footer/>
+ </div>
   );
 };
 

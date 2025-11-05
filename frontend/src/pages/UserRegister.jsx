@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 const UserRegister = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -27,6 +29,8 @@ const UserRegister = () => {
   };
 
   return (
+    <div>
+      <Navbar />
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
@@ -77,6 +81,8 @@ const UserRegister = () => {
           Already have an account? Login
         </p>
       </form>
+    </div>
+    <Footer />
     </div>
   );
 };

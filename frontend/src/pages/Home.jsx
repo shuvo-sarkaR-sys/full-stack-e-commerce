@@ -8,6 +8,7 @@ import LatestNews from "../components/LatestNews";
 import Category from "../components/Category";
 import SpecialOfferSlider from "../components/SpecialOfferSlider";
 import { API_BASE_URL } from "../api/API";
+import Footer from "../components/Footer";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // loading state
@@ -100,6 +101,7 @@ export default function Home() {
         
       )}
       <LatestNews />
+      <Footer />
       </div>
     
   );
