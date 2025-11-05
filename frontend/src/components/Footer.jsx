@@ -3,7 +3,7 @@ import appstore from '../assets/appstore.png'
 import playstore from '../assets/google-play.png'
 const Footer = () => {
   return (
-    <div className='bg-[#F0F3F8] flex-wrap flex justify-end gap-8 md:gap-14 p-4 md:p-18'>
+    <div className='bg-[#F0F3F8] flex-wrap flex justify-start gap-8 md:gap-14 p-4 md:p-18'>
         <div className='xl:w-[20%]  w-auto '>
             <h2 className='text-2xl mb-5 font-bold text-gray-700'>Contact</h2>
             <ul className='leading-loose text-gray-600'>

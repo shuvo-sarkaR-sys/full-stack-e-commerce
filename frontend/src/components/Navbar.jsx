@@ -31,10 +31,10 @@ const Navbar = () => {
           </svg>
           </button>
            
-            <form onSubmit={handleSearch} className='flex mt-2 md:mt-0 items-center'>
+            <form onSubmit={handleSearch} className='flex mt-2 mb-2 md:mb-0 md:mt-0 items-center'>
               <input
                 type="text"
-                className="bg-white-700 border w-full md:w-[400px] border-gray-300 rounded-l py-2 px-4"
+                className="bg-white-700 border w-[80%] md:w-[400px] border-gray-300 rounded-l py-2 px-4"
                 placeholder="Search Product & Best deals"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -45,7 +45,7 @@ const Navbar = () => {
                 </svg>
               </button>
             </form>
-            <div className='flex gap-4'>
+            <div className='flex gap-2 md:gap-4'>
               {!isLogin ? (
                 <>
                   <Link to="/userlogin"><button className='hover:bg-gray-300 md:block hidden bg-gray-200 px-3 rounded cursor-pointer py-2'>Login</button></Link>
