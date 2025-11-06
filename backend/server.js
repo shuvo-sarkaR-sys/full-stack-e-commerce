@@ -35,7 +35,7 @@ const createDefaultAdmin = async () => {
       // const hashedPassword = await bcrypt.hash("admin", 10);
       // await Admin.create({ email, password: hashedPassword });
       await Admin.create({ email, password });
-      console.log(`✅ Default admin created: email=${email}, password=${password}`);
+      console.log("✅ Default admin created");
     } else {
       console.log("ℹ️ Default admin already exists");
     }

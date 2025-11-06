@@ -6,6 +6,7 @@ import ProductList from "../components/ProductList";
 import HotDealManager from "../components/HotDealManager";
 import SpecialOfferManager from "../components/SpecialOfferManager";
 import { API_BASE_URL } from "../api/API";
+import AdminOrders from "../components/AdminOrders";
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
    const [loading, setLoading] = useState(true);
@@ -55,6 +56,7 @@ console.log('token', token);
       <div className="flex">
         <div className="w-[25%]"></div>
         <div className="w-[70%]">
+          <AdminOrders/>
       <ProductForm />
 
       <h3 className="text-xl font-semibold mb-2">Your Products</h3>

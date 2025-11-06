@@ -1,27 +1,33 @@
 import express from "express";
 import Order from "../models/Order.js";
- import jwt from "jsonwebtoken";
+ import jwt from "jsonwebtoken"; 
+ import User from "../models/User.js";
 const router = express.Router();
-// ✅ Middleware to verify user token
-const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "No token" });
-  try {
-    const decoded = jwt.verify(token, process.env.USER_JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    return res.status(401).json({ message: "Invalid token" });
-  }
-};
+
+ const authMiddleware = (req, res, next) => {
+   const authHeader = req.headers.authorization;
+   if (!authHeader || !authHeader.startsWith("Bearer ")) {
+     return res.status(401).json({ message: "No token provided" });
+   }
+ 
+   const token = authHeader.split(" ")[1];
+   try {
+     const decoded = jwt.verify(token, process.env.USER_JWT_SECRET || "your_jwt_secret");
+     req.user = decoded;
+     next();
+   } catch (err) {
+     return res.status(401).json({ message: "Invalid token" });
+   }
+ };
 
 // ✅ Create COD order
 router.post("/create-cod", authMiddleware, async (req, res) => {
   try {
-    const { userId, items, totalAmount, address, phone, email } = req.body;
+    const { items, totalAmount, address, phone, email } = req.body;
+    
 
     const order = new Order({
-      userId,
+        
       items,
       totalAmount,
       deliveryAddress: address,
@@ -49,7 +55,7 @@ router.get("/", async (req, res) => {
 });
 
 // ✅ Get user’s orders (for profile)
-router.get("/user/:userId", authMiddleware, async (req, res) => {
+router.get("/user/:userId", authMiddleware,  async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId })
       .populate("items.product")

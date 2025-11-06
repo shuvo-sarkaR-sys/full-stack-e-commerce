@@ -62,10 +62,10 @@ export default function CheckoutPage() {
 const handleCOD = async () => {
   try {
     const token = localStorage.getItem("usertoken");
-    const userId = localStorage.getItem("userId");
-
+    
+ 
     const payload = {
-      userId,
+      token,
       items: cart.map((i) => ({
         product: i.product._id,
         quantity: i.quantity,
@@ -82,6 +82,7 @@ const handleCOD = async () => {
     });
 
     alert("Your order has been placed with Cash on Delivery!");
+  
   } catch (err) {
     console.error("COD Order Error:", err);
     alert("Failed to place COD order");
@@ -92,7 +93,7 @@ const handleCOD = async () => {
   return (
     <div>
         <Navbar />
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl my-20 mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Checkout</h2>
 
       {/* Cart Details */}

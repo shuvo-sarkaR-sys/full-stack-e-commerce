@@ -1,21 +1,31 @@
 import mongoose from "mongoose";
 
-const orderSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  items: [
-    {
-      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
-      quantity: { type: Number, required: true },
-      price: { type: Number, required: true },
+const orderSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false, // if not logged in guest checkout allowed
     },
-  ],
-  totalAmount: { type: Number, required: true },
-  paymentMethod: { type: String, enum: ["online", "cod"], required: true },
-  status: { type: String, enum: ["pending", "processing", "shipped", "delivered", "cancelled"], default: "pending" },
-  deliveryAddress: { type: String, required: true },
-  email: String,
-  phone: String,
-  createdAt: { type: Date, default: Date.now },
-});
+    items: [
+      {
+        product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
+        quantity: { type: Number, required: true },
+        offerPrice: { type: Number,   },
+      },
+    ],
+    totalAmount: { type: Number, required: true },
+    deliveryAddress: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: { type: String, required: true },
+    paymentMethod: { type: String, enum: ["cod", "online"], default: "cod" },
+    status: {
+      type: String,
+      enum: ["pending", "processing", "shipped", "delivered", "cancelled"],
+      default: "pending",
+    },
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model("Order", orderSchema);
