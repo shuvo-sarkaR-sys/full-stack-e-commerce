@@ -24,6 +24,7 @@ const UserProfile = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(res.data);
+        localStorage.setItem("userId", res.data._id);
       } catch (err) {
         localStorage.removeItem("usertoken");
         navigate("/userlogin");

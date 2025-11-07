@@ -7,7 +7,7 @@ export default function UserOrders() {
   const [loading, setLoading] = useState(true);
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("usertoken");
-
+console.log('userid', userId)
   useEffect(() => {
     if (userId && token) {
       fetchOrders();
@@ -56,7 +56,7 @@ export default function UserOrders() {
         <p className="text-gray-600 text-center">You have no orders yet.</p>
       ) : (
         orders.map((order) => (
-          <div key={order._id} className="border rounded-lg p-4 mb-4 shadow-sm bg-white">
+          <div key={order._id} className="border border-gray-300 rounded-lg p-4 mb-4 shadow-sm bg-white">
             <div className="flex justify-between items-center">
               <h3 className="font-semibold text-lg">
                 Order #{order._id.slice(-6)}

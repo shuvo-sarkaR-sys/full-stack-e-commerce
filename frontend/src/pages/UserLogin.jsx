@@ -14,6 +14,7 @@ const UserLogin = () => {
     try {
       const res = await axios.post(`${API_BASE_URL}/UserAuth/login`, { email, password });
       localStorage.setItem("usertoken", res.data.token);
+  
       navigate("/profile");
     } catch (error) {
       alert(error.response.data.message);

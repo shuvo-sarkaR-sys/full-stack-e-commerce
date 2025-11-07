@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: false, // if not logged in guest checkout allowed
+      required: true, // if not logged in guest checkout allowed
     },
     items: [
       {
