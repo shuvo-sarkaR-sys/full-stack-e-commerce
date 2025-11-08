@@ -89,6 +89,7 @@ const Navbar = () => {
           <Link to="/contact"><li>Contact</li></Link>
            <Link to="/userlogin"><button className='hover:bg-gray-300   bg-gray-200 px-3 rounded cursor-pointer py-2'>Login</button></Link>
                   <Link to="/userregister"><button className=' bg-gray-200  hover:bg-gray-300 px-3 rounded cursor-pointer py-2'>Sign Up</button></Link>
+                  <Link to="/admin"><button className=' bg-gray-200  hover:bg-gray-300 px-3 rounded cursor-pointer py-2'>Admin</button></Link>
         </ul>
         <ul className='flex flex-col gap-5'>
           <li>Support</li>
