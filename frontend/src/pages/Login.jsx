@@ -23,27 +23,27 @@ export default function Login() {
   return (
     <div>
       <Navbar/>
-    <div className="max-w-sm mx-auto p-4">
+    <div className="max-w-md border p-5 border-gray-300 my-20 rounded-xl mx-auto p-4">
       <h2 className="text-2xl mb-4">Admin Login</h2>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin}  >
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 w-full mb-3"
+          className="border border-gray-200 p-2 w-full mb-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          className="border p-2 w-full mb-3"
+          className="border border-gray-200 p-2 w-full mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className="bg-blue-600 text-white px-4 py-2 rounded w-full">
           Login
         </button>
-        <Link to='/forgot-password'><button>ResetPassword</button></Link>
+        <Link to='/forgot-password'><button className="mt-2 cursor-pointer underline text-gray-600">Reset Password</button></Link>
       </form>
     </div>
     <Footer/>

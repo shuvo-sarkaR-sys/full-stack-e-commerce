@@ -34,7 +34,7 @@ const UserRegister = () => {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md w-80"
+        className="bg-white p-6 rounded-lg shadow-md max-w-md"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
 
@@ -46,7 +46,7 @@ const UserRegister = () => {
           placeholder="Full Name"
           value={form.name}
           onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-2 mb-3 border border-gray-300"
           required
         />
         <input
@@ -55,7 +55,7 @@ const UserRegister = () => {
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
-          className="w-full p-2 mb-3 border rounded"
+          className="w-full p-2 mb-3 border  border-gray-300"
           required
         />
         <input
@@ -64,12 +64,12 @@ const UserRegister = () => {
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
-          className="w-full p-2 mb-4 border rounded"
+          className="w-full p-2 mb-4 border  border-gray-300"
           required
         />
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2   hover:bg-blue-700 transition"
         >
           Register
         </button>
