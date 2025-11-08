@@ -13,7 +13,7 @@ export default function AdminDashboard() {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem("token"); // admin JWT
-console.log('token', token);
+ 
   useEffect(() => {
     fetchProducts();
   }, []);

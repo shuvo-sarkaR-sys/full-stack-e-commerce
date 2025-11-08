@@ -41,7 +41,7 @@ const About = () => {
 
         <div className="mt-16">
           <h2 className="text-2xl font-bold mb-4">Why Choose Us?</h2>
-          <ul className="text-gray-600 space-y-2">
+          <ul className="text-gray-600 text-center space-y-2">
             <li>✅ Free and fast shipping on eligible items</li>
             <li>✅ 24/7 customer support</li>
             <li>✅ Easy returns and secure checkout</li>
