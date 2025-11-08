@@ -34,7 +34,6 @@ function App() {
         <Route path='/userlogin' element={<UserLogin/>}/>
                 <Route path="/userregister" element={<UserRegister />} />
         <Route path="/profile" element={<UserProfile />} />
-
          <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/reset-password" element={<ResetPassword />} />
@@ -48,8 +47,6 @@ function App() {
 <Route path="/checkout" element={<Checkout />} />
 <Route path='/about' element={<About/>}/>
 <Route path='/contact' element={<Contact/>}/>
-      
-       
 <Route path='/admin' element={ <PrivateRoute><Dashboard/></PrivateRoute>}/>
 
       </Routes>
