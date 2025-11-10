@@ -53,7 +53,7 @@ const Cart = () => {
   return (
     <div>
       <Navbar />
-    <div className="max-w-4xl mx-auto relative p-4">
+    <div className="max-w-4xl my-20 border border-gray-200 rounded-md mx-auto relative md:p-8 p-4">
       <h1 className="text-2xl font-bold mb-4">🛒 Your Cart</h1>
 
       {loading && (
@@ -80,7 +80,7 @@ const Cart = () => {
                
               <div
                 key={item.product._id}
-                className="flex items-center justify-between border-b py-3"
+                className="flex items-center justify-between border-b border-gray-200 py-3"
               >
                 <div className="flex items-center gap-3">
                   <img
@@ -99,7 +99,7 @@ const Cart = () => {
                     onClick={() =>
                       updateQuantity(item.product._id, Math.max(1, item.quantity - 1))
                     }
-                    className={`px-2 py-1 border rounded ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`px-3 bg-black/10 border-gray-200 py-1 border rounded ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     -
                   </button>
@@ -112,14 +112,14 @@ const Cart = () => {
                       updateQuantity(item.product._id, q);
                     }}
                     disabled={loading}
-                    className="w-14 border p-1 text-center rounded"
+                    className="w-14 border p-1 border-gray-300 text-center rounded"
                   />
                   <button
                     disabled={loading}
                     onClick={() =>
                       updateQuantity(item.product._id, item.quantity + 1)
                     }
-                    className={`px-2 py-1 border rounded ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    className={`px-2.5 bg-black/10 border-gray-300 py-1 border rounded ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     +
                   </button>

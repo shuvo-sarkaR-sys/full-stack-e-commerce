@@ -101,7 +101,8 @@ const SpecialOfferSlider = () => {
             1280: { slidesPerView: 4 },
           }}
           autoplay={{ delay: 3000}}
-          loop={true}
+          loop={offers.length > 4}
+
         >
           {offers.map((product) => {
             const price = product.offerPrice || product.previousPrice || 0;
