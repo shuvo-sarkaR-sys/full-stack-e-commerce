@@ -25,6 +25,8 @@ const UserProfile = () => {
         });
         setUser(res.data);
         localStorage.setItem("userId", res.data._id);
+        localStorage.setItem('user', user)
+ 
       } catch (err) {
         localStorage.removeItem("usertoken");
         navigate("/userlogin");

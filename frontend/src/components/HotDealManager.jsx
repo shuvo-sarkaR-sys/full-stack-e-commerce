@@ -59,8 +59,8 @@ const HotDealManager = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">🔥 Hot Deal Management</h2>
-      <table className="w-full border">
+      <h2 className="text-xl font-bold mb-4">Hot Deal Management</h2>
+      <table className="w-full border border-gray-200">
         <thead>
           <tr className="bg-gray-200">
             <th>Name</th>
@@ -72,11 +72,11 @@ const HotDealManager = () => {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr key={product._id} className="border-b">
+            <tr key={product._id} className="border-b border-gray-300">
               <td className="p-2">{product.name}</td>
               <td className="p-2 text-center">${product.previousPrice}</td>
 
-              <td className="p-2 text-center">
+              <td className="p-2 text-sm font-semibold text-center">
                 <button
                   className={`px-3 py-1 rounded ${
                     product.isHotDeal
@@ -99,21 +99,21 @@ const HotDealManager = () => {
                 <input
                   type="number"
                   value={product.discount || ""}
-                  className="border p-1 w-20"
+                  className="border border-gray-300 p-1 w-20"
                   onChange={(e) =>
                     handleDiscountChange(product._id, e.target.value)
                   }
                 />
               </td>
 
-              <td className="p-2 text-center">
+              <td className="p-2 text-sm font-semibold text-center">
                 <button
                   className={`px-3 py-1 rounded ${
                     product.heroOffer ? "bg-yellow-500 text-white" : "bg-gray-300"
                   }`}
                   onClick={() => handleHeroOffer(product._id)}
                 >
-                  {product.heroOffer ? "Hero Active" : "Set Hero"}
+                  {product.heroOffer ? "Active Hero" : "Set Hero"}
                 </button>
               </td>
             </tr>

@@ -89,8 +89,8 @@ const SpecialOfferManager = () => {
                       p.discount
                     )
                   }
-                  className={`px-3 py-1 rounded ${
-                    p.specialOffer ? "bg-green-500 text-white" : "bg-gray-300"
+                  className={`px-3 text-sm font-semibold py-1 rounded ${
+                    p.specialOffer ? "bg-green-500   text-white" : "bg-gray-300"
                   }`}
                 >
                   {p.specialOffer ? "Active" : "Set Offer"}

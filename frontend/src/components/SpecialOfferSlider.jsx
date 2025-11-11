@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
@@ -92,7 +94,7 @@ const SpecialOfferSlider = () => {
 
       <div className="md:mx-18 mx-4">
         <Swiper
-          modules={[Autoplay]}
+          modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={40}
           breakpoints={{
             320: { slidesPerView: 2 },
@@ -101,7 +103,7 @@ const SpecialOfferSlider = () => {
             1280: { slidesPerView: 4 },
           }}
           autoplay={{ delay: 3000}}
-          loop={offers.length > 4}
+          loop={true }
 
         >
           {offers.map((product) => {

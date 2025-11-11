@@ -20,12 +20,12 @@ export default function AdminOrders() {
   };
 
   return (
-    <div className="p-6">
+    <div  className="mb-10">
       <h2 className="text-2xl font-bold mb-4">Manage Orders</h2>
-      <table className="w-full border">
+      <table className="w-full border border-gray-300">
         <thead>
-          <tr className="bg-gray-200">
-            <th>User</th>
+          <tr className="bg-gray-200 ">
+            <th className="py-2">User</th>
             <th>Total</th>
             <th>Payment</th>
             <th>Status</th>
@@ -34,16 +34,35 @@ export default function AdminOrders() {
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order._id} className="border-b text-center">
-              <td>{order.email}</td>
+            <tr key={order._id} className="border-b  border-gray-300 text-center">
+              <td className="py-3">{order.email}</td>
               <td>৳{order.totalAmount}</td>
               <td>{order.paymentMethod.toUpperCase()}</td>
-              <td>{order.status}</td>
+             <td 
+            
+ 
+>
+ <p className={` w-fit px-3 py-1 font-semibold m-auto text-white text-sm  rounded 
+    ${
+      order.status === "pending"
+        ? "bg-yellow-500"
+        : order.status === "processing"
+        ? "bg-blue-500"
+        : order.status === "shipped"
+        ? "bg-purple-500"
+        : order.status === "delivered"
+        ? "bg-green-600"
+        : order.status === "cancelled"
+        ? "bg-red-600"
+        : "bg-gray-400"
+    }
+  `}> {order.status}</p>
+</td>
               <td>
                 <select
                   value={order.status}
                   onChange={(e) => updateStatus(order._id, e.target.value)}
-                  className="border p-1 rounded"
+                  className="border border-gray-300 p-1 rounded"
                 >
                   <option>pending</option>
                   <option>processing</option>

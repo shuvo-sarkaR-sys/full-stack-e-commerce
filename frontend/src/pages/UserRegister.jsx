@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/API";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 const UserRegister = () => {
@@ -11,6 +12,8 @@ const UserRegister = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -22,7 +25,8 @@ const UserRegister = () => {
     try {
       const res = await axios.post(`${API_BASE_URL}/UserAuth/register`, form);
       localStorage.setItem("usertoken", res.data.token);
-      navigate("/profile");
+      localStorage.setItem('email', form.email);
+      navigate("/user-otp");
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     }

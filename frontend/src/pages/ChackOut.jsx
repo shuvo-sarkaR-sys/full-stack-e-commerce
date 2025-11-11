@@ -63,7 +63,7 @@ const handleCOD = async () => {
   try {
     const token = localStorage.getItem("usertoken");
     const userId = localStorage.getItem("userId")
-     console.log('checkout userId', userId)
+    
     const payload = {
       token,
       userId,

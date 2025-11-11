@@ -21,7 +21,8 @@ import BrandPage from './pages/BrandPage'
 import Checkout from './pages/ChackOut'
 import Contact from './pages/Contact'
 import About from './pages/About'
-import Footer from './components/Footer'
+import Footer from './components/Footer' 
+import UserVerifyOtp from './pages/UserVerifyOtp'
 function App() {
  
 
@@ -47,8 +48,8 @@ function App() {
 <Route path="/checkout" element={<Checkout />} />
 <Route path='/about' element={<About/>}/>
 <Route path='/contact' element={<Contact/>}/>
-<Route path='/admin' element={ <PrivateRoute><Dashboard/></PrivateRoute>}/>
-
+<Route path='/admin/*' element={ <PrivateRoute><Dashboard/></PrivateRoute>}/>
+<Route path='/user-otp' element={<UserVerifyOtp/>}/>
       </Routes>
     </BrowserRouter>
     </>
