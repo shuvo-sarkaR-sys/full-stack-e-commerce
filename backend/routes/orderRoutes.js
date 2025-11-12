@@ -24,12 +24,13 @@ const router = express.Router();
 // ✅ Create COD order
 router.post("/create-cod", authMiddleware, async (req, res) => {
   try {
-    const { userId ,items, totalAmount, address, phone, email } = req.body;
+    const { userId ,items, totalAmount, name, address, phone, email } = req.body;
     
    
     const order = new Order({
       userId,
       items,
+      name,
       totalAmount,
       deliveryAddress: address,
       phone,

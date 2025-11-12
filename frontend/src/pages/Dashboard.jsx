@@ -37,7 +37,7 @@ export default function AdminDashboard() {
   };
  
 const handleClick = ()=>{
-  
+
 }
    
 
@@ -59,7 +59,7 @@ const handleClick = ()=>{
       </div>
       {/* side nav start from here */} 
       
-      <nav className="fixed left-0 xl:block hidden p-4 w-80 border-gray-300 border-r top-0 h-full bg-white">
+      <nav className="fixed left-0 xl:block hidden p-4 w-[20%] border-gray-300 border-r top-0 h-full bg-white">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <br /> 
        
@@ -84,9 +84,9 @@ const handleClick = ()=>{
 <p>Special Offer Slider</p>
 </div></Link>
       </nav>
-      <div className="flex">
-        <div className="xl:w-[25%] xl:block hidden"></div>
-        <div className="xl:w-[70%] w-full">
+      <div className="flex ">
+        <div className="xl:w-[22%] xl:block hidden"></div>
+        <div className="xl:w-[73%] w-full">
          <Routes>
          <Route path="/"  element={<AdminOrders/>}/>
       <Route path="add-product" element={<ProductForm />}/>

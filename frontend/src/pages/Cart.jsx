@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 const Cart = () => {
   const [cart, setCart] = useState({ items: [] });
   const [loading, setLoading] = useState(false); // ✅ for loading spinner
-
+ 
   const token = localStorage.getItem("usertoken");
   const headers = { Authorization: `Bearer ${token}` };
 

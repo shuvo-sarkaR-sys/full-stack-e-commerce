@@ -3,10 +3,12 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { API_BASE_URL } from "../api/API";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 export default function CheckoutPage() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState('');
-  const [form, setForm] = useState({ email: "", phone: "", address: "" });
+  const [form, setForm] = useState({ email: "", name: "", phone: "", address: "" });
    
 
   useEffect(() => {
@@ -69,6 +71,7 @@ const handleCOD = async () => {
       userId,
       items: cart.map((i) => ({
         product: i.product._id,
+        name: i.product.name,
         quantity: i.quantity,
         price: i.product.offerPrice || i.product.price,
       })),
@@ -76,6 +79,7 @@ const handleCOD = async () => {
       address: form.address,
       phone: form.phone,
       email: form.email,
+      name: form.name,
     };
 
     await axios.post(`${API_BASE_URL}/orders/create-cod`, payload, {
@@ -85,7 +89,7 @@ const handleCOD = async () => {
     alert("Your order has been placed with Cash on Delivery!");
      navigate("/profile");
   } catch (err) {
-    console.error("COD Order Error:", err);
+    
     alert("Failed to place COD order");
   }
 };

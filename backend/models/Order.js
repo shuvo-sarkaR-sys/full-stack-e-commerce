@@ -16,6 +16,7 @@ const orderSchema = new mongoose.Schema(
     ],
     totalAmount: { type: Number, required: true },
     deliveryAddress: { type: String, required: true },
+    name: { type: String, required: true},
     phone: { type: String, required: true },
     email: { type: String, required: true },
     paymentMethod: { type: String, enum: ["cod", "online"], default: "cod" },
