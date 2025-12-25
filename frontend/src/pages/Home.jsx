@@ -31,7 +31,7 @@ export default function Home() {
     };
     loadProducts();
   }, []);
-  if (loading) return <p className="h-[80vh]">Loading products...</p>;
+  if (loading) return <p className="h-[80vh]">Please wait this is deploy on free deployment server, Loading products...</p>;
   if (error) return <p>{error}</p>;
 
   return (
