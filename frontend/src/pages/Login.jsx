@@ -25,6 +25,8 @@ export default function Login() {
       <Navbar/>
     <div className="max-w-md border p-5 border-gray-300 my-20 rounded-xl mx-auto p-4">
       <h2 className="text-2xl mb-4">Admin Login</h2>
+      <h2>Email: admin@example.com</h2>
+      <h2>Pass: admin123</h2>
       <form onSubmit={handleLogin}  >
         <input
           type="email"
